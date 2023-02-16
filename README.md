@@ -4,3 +4,7 @@ https://drive.google.com/drive/folders/1JTDWZtOhXautpa1wfHQH4-VJEj402DpL?usp=sha
 
 ## Notion Link
 https://drive.google.com/drive/folders/1JTDWZtOhXautpa1wfHQH4-VJEj402DpL?usp=sharing
+
+## Populate database
+image.png
+
