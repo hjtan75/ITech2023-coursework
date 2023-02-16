@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your bookings</title>
+</head>
+<body>
+
+<h1>Your Reservations </h1>
+{% if bookings %}
+<div>
+<table border = "1">
+    <tr>
+        <th>Date</th>
+        <th>Number of People</th>
+        <th>Description</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+    {% for booking in bookings %}
+    <tr>
+        <td>{{ booking.bookingID }}</td>
+        <td>{{ booking.date }}</td>
+        <td>{{ booking.numberOfPeople }}</td>
+        <td>{{ booking.notes }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+</div>
+{% else %}
+    <strong>No bookings currently.</strong>
+{% endif %}
+</body>
+</html>
