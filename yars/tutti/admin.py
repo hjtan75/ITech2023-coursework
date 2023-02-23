@@ -6,7 +6,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'phoneNum', 'address', 'gender')
 
 class BookingAdmin(admin.ModelAdmin):
-    list_display = ('bookingID', 'user', 'date', 'numberOfPeople', 'bookingStatus')
+    list_display = ('bookingID', 'user', 'date', 'time', 'numberOfPeople', 'bookingStatus')
 
 class ReviewAdmin(admin.ModelAdmin):
     list_display = ('reviewID', 'user', 'rating')
