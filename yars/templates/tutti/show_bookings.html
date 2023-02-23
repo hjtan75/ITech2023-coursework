@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>Your bookings</title>
     <!-- Bootstrap core CSS -->
     <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css"
@@ -15,11 +16,12 @@
 <h1>Your Reservations </h1>
 </div>
 {% if bookings %}
-<div class = "container-fluid show_booking">
-<table class = "table-bordered" >
+<div class = "container-fluid show_booking" id="bookingTable">
+<table class = "table-bordered " >
     <tr>
         <th>bookingID</th>
         <th>Date</th>
+        <th>Time</th>
         <th>Number of People</th>
         <th>Description</th>
         <th>Edit</th>
@@ -29,24 +31,23 @@
     <tr>
         <td>{{ booking.bookingID }}</td>
         <td>{{ booking.date }}</td>
+        <td>{{ booking.get_time_display|slice:"2:7" }}</td>
         <td>{{ booking.numberOfPeople }}</td>
         <td>{{ booking.notes }}</td>
         <td>
-            <button class="btn btn-primary edit_booking">
-                Edit!
-            </button>
+            <span data-feather="edit" class="edit_booking" id="edit_booking" data-bookingid="{{ booking.bookingID }}"></span>
         </td>
         <td>
-            <button class="btn btn-primary delete_booking">
-                Delete!
-            </button>
+            <span data-feather="trash-2" class="delete_booking" id="delete{{ booking.bookingID }}" data-bookingid="{{ booking.bookingID }}"></span>
         </td>
     </tr>
     {% endfor %}
 
 </table>
 </div>
+<footer>
 
+</footer>
 {% else %}
     <strong>No bookings currently.</strong>
 {% endif %}
