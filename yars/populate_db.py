@@ -10,8 +10,8 @@ from tutti.models import UserProfile, Booking, Review
 from django.contrib.auth.models import User, UserManager
 
 def populate():
-    user_IDs = []
     faker = Faker()
+    timeSlots = createTimeSlotsTuple()
 
     for _ in range(50):
         userName = faker.name()
@@ -31,10 +31,11 @@ def populate():
 
         for _ in range(random.randint(0,5)):
             booking_date = faker.date()
+            booking_time = random.choice(timeSlots)
             booking_numberOfPeople = random.randint(1,6)
             booking_notes = faker.text(max_nb_chars=1000)
             booking_bookingStatus = random.choice([True, False])
-            add_booking(userProfileObj, booking_date, booking_numberOfPeople, booking_notes, booking_bookingStatus)
+            add_booking(userProfileObj, booking_date, booking_time, booking_numberOfPeople, booking_notes, booking_bookingStatus)
             # print(f'Booking: {booking_date} | {booking_numberOfPeople} | {booking_notes} | {booking_bookingStatus}')
 
         for _ in range(random.randint(0,2)):
@@ -49,13 +50,27 @@ def add_userProfile(userObj, ph, addr, gen):
     userProfileObj.save()
     return userProfileObj
 
-def add_booking(usr, dt, nop, note, bs):
-    bookingObj = Booking.objects.get_or_create(user=usr, date=dt, numberOfPeople=nop, notes=note, bookingStatus=bs)[0]
+def add_booking(usr, dt, tm, nop, note, bs):
+    bookingObj = Booking.objects.get_or_create(user=usr, date=dt, time=tm, numberOfPeople=nop, notes=note, bookingStatus=bs)[0]
     bookingObj.save()
 
 def add_review(usr, rt, des):
     reviewObj = Review.objects.get_or_create(user=usr, rating=rt, description=des)[0]
     reviewObj.save()
+
+def createTimeSlotsTuple():
+    startHour = 12
+    endHour = 20
+
+    timeslots = []
+    for hour in range(startHour, endHour+1):
+        for minute in range(0, 31, 30):
+            if hour != endHour or minute != 30:
+                hourString = str(hour)
+                minString = str(minute) if minute == 30 else str(minute) + "0"
+                timeslots.append((f"{hourString}:{minString}", f"{hourString}:{minString}"))
+
+    return tuple(timeslots)
 
 
 if __name__ ==  '__main__':
