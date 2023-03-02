@@ -44,3 +44,17 @@ def booking_date_and_time(request):
 
     return render(request, 'tutti/booking_date_time.html', context=context_dict)
 
+
+def booking_confirmation(request):
+    context_dict = {}
+    context_dict['user'] = 'Adam Smith'
+    context_dict['phone'] = '07465898556'
+    context_dict['email'] = 'testing@testing.com'
+    context_dict['datatime'] = '19:30 26 February 2022'
+    context_dict['numOfPeoples'] = 5
+
+    return render(request, 'tutti/booking_confirmation.html', context=context_dict)
+
+def booking_completed(request):
+    return render(request, 'tutti/booking_completed.html')
+
