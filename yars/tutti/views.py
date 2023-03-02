@@ -28,3 +28,19 @@ def show_bookings(request):
 
     # Go render the response and return it to the client.
     return render(request, 'tutti/show_bookings.html', context=context_dict)
+
+
+def booking(request):
+    context_dict = {}
+    context_dict['numOfPeoples'] = [1, 2, 3, 4, 5, 6]
+
+    return render(request, 'tutti/booking_num_people.html', context=context_dict)
+
+def booking_date_and_time(request):
+    context_dict = {}
+    context_dict['months'] = ['June', 'July', 'August', 'September']
+    context_dict['days'] = ['01', '02', '05', '06']
+    context_dict['times'] = ['0500', '0900', '1230', '1500']
+
+    return render(request, 'tutti/booking_date_time.html', context=context_dict)
+
