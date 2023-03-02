@@ -22,7 +22,10 @@ def show_bookings(request):
         # If we can't, the .get() method raises a DoesNotExist exception.
         # The .get() method returns one model instance or raises an exception.
         bookings = Booking.objects.filter(user_id=8)
-        print(bookings)
+        print(bookings[0].time)
+        print(bookings[0].date)
+        print(bookings[1].time)
+        print(bookings[1].date)
         # Retrieve all of the associated bookings.
         # Adds our results list to the template context under name pages.
         context_dict['bookings'] = bookings
@@ -53,3 +56,26 @@ class DeleteBookingView(View):
 
         return JsonResponse({'status': 'success'})
 
+
+class EditBookingView(View):
+
+    def get(self, request):
+        booking_id = request.GET['booking_id']
+        numOFPeople = request.GET['numberOFPeople']
+        date = request.GET['date']
+        time = request.GET['time']
+        notes = request.GET['notes']
+        try:
+            bookings = Booking.objects.get(bookingID=booking_id)
+            print(bookings)
+        except bookings.DoesNotExist:
+            return HttpResponse(-1)
+        except ValueError:
+            return HttpResponse(-1)
+        bookings.numberOfPeople = numOFPeople
+        bookings.date = date
+        bookings.time = time
+        bookings.notes = notes
+        bookings.save()
+
+        return JsonResponse({'status': 'success'})
