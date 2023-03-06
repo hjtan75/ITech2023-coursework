@@ -9,48 +9,23 @@
 <body>
 <br>
 <div class="layui-fluid">
-    <div class="layui-row layui-col-space5">
-        <!-- <div class="layui-col-md6 layui-col-md-offset3">
-            <h1 style="text-align: center">Tuitti Pizza Reservation System</h1>
-        </div>
-        <div class="layui-col-md3" style="text-align: center;font: bold;">
-            <a href="/login">Login</a>
-        </div>
-        <div class="layui-col-md4 layui-col-md-offset4">
-            <div class="layui-fluid">
-                <div class="layui-row layui-col-space5">
-                    <div class="layui-col-md4" style="align-content: center">
-                        <a class="layui-btn layui-btn-primary layui-btn-fluid">Menu</a>
-                    </div>
-                    <div class="layui-col-md4">
-                        <a class="layui-btn layui-btn-primary layui-btn-fluid">About</a>
-                    </div>
-                    <div class="layui-col-md4">
-                        <a class="layui-btn layui-btn-normal layui-btn-fluid">Reviews</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="layui-col-md1 layui-col-md-offset2">
-            <input class="layui-btn layui-btn-fluid" type="button" value="My Booking"/>
-        </div>
-        <hr> -->
         <div class="layui-col-md6 layui-col-md-offset3">
             <h1 style="text-align: center">Reviews</h1>
         </div>
+    
         {% for review in reviews %}
             <div class="layui-col-md6 layui-col-md-offset3">
                 <fieldset class="layui-elem-field">
                     <legend>{{ review.user.user.username }}
                         {% for rate in 5|range_ %}
                             {% if rate < review.rating %}
-                                <i class="layui-icon layui-icon-star-fill"></i>
+                                <i class="layui-icon layui-icon-star-fill" style="color:orange"></i>
                             {% else %}
-                                <i class="layui-icon layui-icon-star"></i>
+                                <i class="layui-icon layui-icon-star" style="color:orange"></i>
                             {% endif %}
                         {% endfor %}
                     </legend>
-                    <div class="layui-field-box">
+                    <div class="layui-field-box" style="text-align: justify;">
                         {{ review.description }}
                     </div>
                 </fieldset>
@@ -61,12 +36,62 @@
         </div>
     </div>
 </div>
+<br>
+<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
 </body>
-<div>
-    
+<div id="add_review" hidden="hidden">
+    <form class="layui-form" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">Rate</label>
+            <div id="star"></div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">Description</label>
+            <div class="layui-input-inline">
+                <textarea id="description" name="description" placeholder="Please input your description" class="layui-textarea"
+                          style="width: 400px"></textarea>
+            </div>
+        </div>
+    </form>
 </div>
-
 <script>
-   
+
+
+    function onAddReviewClick() {
+    }
+
+    layui.use(['jquery', 'rate'], function () {
+        var $ = layui.jquery;
+        var rate = layui.rate;
+
+        var rating = 0;
+
+        rate.render({
+            elem: '#star',
+            choose: function (value) {
+                rating = value;
+            }
+        });
+
+        onAddReviewClick = function () {
+            layer.open({
+                type: 1,
+                title: 'Add review',
+                content: $('#add_review'),
+                btn: ['Add', 'Cancel'],
+                area: ['600px', 'auto'],
+                shadeClose: true,
+                yes: function (index, layero) {
+                    let description = $("#description").val();
+                    alert("Add " + rating + " " + "stars" + " " + description);
+                    layer.close(index);
+                },
+                btn2: function (index, layero) {
+                    layer.close(index);
+                }
+            });
+        }
+
+    });
 </script>
 </html>
