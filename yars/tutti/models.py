@@ -33,7 +33,7 @@ class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     date = models.DateField()
-    time = models.CharField(max_length=2, choices=timeSlots, default=timeSlots[0])
+    time = models.CharField(max_length=5, choices=timeSlots, default=timeSlots[0])
     numberOfPeople = models.IntegerField()
     notes = models.CharField(max_length=1000)
     bookingStatus = models.BooleanField()
