@@ -8,7 +8,7 @@
 
 <h1>Enter the number of people</h1>
 <div>
-    {% comment %} Selection of data time for booking {% endcomment %}
+    {% comment %} Selection of data time for booking
     <label for="datetime-select">Select a date & time:</label>
     <select name="Month" id="month-select">
         <option value="">--Please choose month--</option>
@@ -27,7 +27,23 @@
     {% for time in times %}
         <option value={{ time }}><td>{{ time }}</td></option>
     {% endfor %}
-    </select>
+    </select> {% endcomment %}
+
+    <div>
+        <form id="num_people_form" method="post" action="/tutti/booking/">
+            {% csrf_token %}
+            {% comment %} {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text }}
+                {{ field }}
+            {% endfor %} {% endcomment %}
+            {{ form }}
+            <input type="submit" name="submit" value="Next" />
+        </form>
+    </div>
 </div>
 </body>
 </html>

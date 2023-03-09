@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from tutti.models import User, Booking
+
 from django.http import JsonResponse
 import tutti.booking_function
+from tutti.forms import numPeopleForm
 
 # Create your views here.
 def index(request):
@@ -86,8 +88,22 @@ class EditBookingView(View):
 
 def booking(request):
     context_dict = {}
-    context_dict['numOfPeoples'] = [1, 2, 3, 4, 5, 6]
 
+    form = numPeopleForm()
+    context_dict['form'] = form
+
+    # if request.method == 'POST':
+    #     form = numPeopleForm(request.POST)
+
+    # if form.is_valid():
+    #     # Save the new category and return to index page
+    #     print(form)
+    #     return redirect('tutti/booking_date_time.html')
+    # else:
+    #     print(form.errors)
+
+    # Loading the form
+    print(form)
     return render(request, 'tutti/booking_num_people.html', context=context_dict)
 
 
