@@ -5,7 +5,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yars.settings')
 
 
 import django
-from django.db.models import Sum
+from django.db.models import Sum, Count
 django.setup()
 from tutti.models import User, Booking
 
@@ -19,8 +19,26 @@ def numSeatsForDate(date_string):
     seats_left = numOfPeoplePerSlot - nop["numberOfPeople__sum"]
     return seats_left
 
-# def dateForNumSeats(num):
-#     # Return which date is available for that number of seats
+def dateForNumSeats(numSeatRequested):
+    # Return which date and time is available for that number of seats
+    datetimeAvailable = {}
+    results = (Booking.objects
+               .filter(bookingStatus=True)
+               .values('date', 'time')
+               .annotate(dcount=Sum('numberOfPeople'))
+               .order_by('date'))
+
+    for result in results:
+        if numOfPeoplePerSlot - result['dcount'] >= numSeatRequested:
+            date = result['date']
+            time = result['time']
+            timeArr = datetimeAvailable.get(date, list())
+            timeArr.append(time)
+            datetimeAvailable[date] = timeArr
+
+    return datetimeAvailable
+
+
 
 if __name__ == "__main__":
-    numSeatsForDate("2023-01-06")
+    dateForNumSeats(10)
