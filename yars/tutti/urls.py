@@ -5,6 +5,9 @@ app_name = 'tutti'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('register_profile/', views.register_profile, name='register_profile'),
+    path('profile/<username>/', views.ProfileView.as_view(), name='profile'),
+    path('profiles/', views.ListProfilesView.as_view(), name='list_profiles'),
     path('show_bookings/', views.show_bookings, name='show_bookings'),
     path('delete_booking/', views.DeleteBookingView.as_view(), name='delete_booking'),
     path('edit_booking/', views.EditBookingView.as_view(), name='edit_booking'),

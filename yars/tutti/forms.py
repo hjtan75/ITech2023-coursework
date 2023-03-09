@@ -1,5 +1,6 @@
 from django import forms
 from tutti.models import Review, Booking
+from tutti.models import UserProfile
 
 numOfPeopleChoices = (
     ("1", "One"),
@@ -15,4 +16,9 @@ class numPeopleForm(forms.Form):
 
 
 # class dateTimeForm(forms.Modelform):
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('phoneNum', 'address', 'gender',)
     

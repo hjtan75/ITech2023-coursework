@@ -3,11 +3,13 @@ from django.http import HttpResponse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.decorators import login_required
-from tutti.models import User, Booking
-
+from tutti.models import User, Booking, UserProfile
+from tutti.forms import  UserProfileForm
 from django.http import JsonResponse
 import tutti.booking_function
 from tutti.forms import numPeopleForm
+from django.urls import reverse
+
 
 # Create your views here.
 def index(request):
@@ -16,6 +18,80 @@ def index(request):
     context_dict['boldmessage'] = 'Crunchy, creamy, cookie, candy, cupcake!'
     # Return response back to the user, updating any cookies that need changed.
     return render(request, 'tutti/index.html', context=context_dict)
+
+
+@login_required
+def register_profile(request):
+    form = UserProfileForm()
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            user_profile = form.save(commit=False)
+            user_profile.user = request.user
+            user_profile.save()
+            return redirect(reverse('tutti:index'))
+        else:
+            print(form.errors)
+    context_dict = {'form': form}
+    return render(request, 'tutti/profile_registration.html', context_dict)
+
+
+class ProfileView(View):
+    def get_user_details(self, username):
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+
+        user_profile = UserProfile.objects.get_or_create(user=user)[0]
+        form = UserProfileForm({'phoneNum': user_profile.phoneNum,
+                                'address': user_profile.address,
+                                'gender': user_profile.gender})
+
+        return user, user_profile, form
+
+    @method_decorator(login_required)
+    def get(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('tutti:index'))
+
+        context_dict = {'user_profile': user_profile,
+                        'selected_user': user,
+                        'form': form}
+
+        return render(request, 'tutti/profile.html', context_dict)
+
+    @method_decorator(login_required)
+    def post(self, request, username):
+        try:
+            (user, user_profile, form) = self.get_user_details(username)
+        except TypeError:
+            return redirect(reverse('tutti:index'))
+
+        form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse('tutti:profile',
+                                    kwargs={'username': username}))
+        else:
+            print(form.errors)
+
+        context_dict = {'user_profile': user_profile,
+                        'selected_user': user,
+                        'form': form}
+
+        return render(request, 'tutti/profile.html', context_dict)
+
+
+class ListProfilesView(View):
+    @method_decorator(login_required)
+    def get(self, request):
+        profiles = UserProfile.objects.all()
+
+        return render(request, 'tutti/list_profiles.html', {'user_profile_list': profiles})
 
 
 # View to show booking

@@ -19,10 +19,19 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include
 from tutti import views
+from registration.backends.simple.views import RegistrationView
+from django.urls import reverse
+
+
+class MyRegistrationView(RegistrationView):
+    def get_success_url(self, user):
+        return reverse('tutti:register_profile')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('tutti/', include('tutti.urls')),
+    path('accounts/register/', MyRegistrationView.as_view(), name='registration_register'),
     path('accounts/', include('registration.backends.simple.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
