@@ -10,7 +10,7 @@ numOfPeopleChoices = (
     ("6", "Six"),
 )
 
-class numPeopleForm(forms.Form):
+class numPeopleForm(forms.ModelForm):
     numofPeople = forms.ChoiceField(choices = numOfPeopleChoices)
 
 
