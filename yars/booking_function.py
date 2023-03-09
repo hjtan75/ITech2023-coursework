@@ -11,13 +11,19 @@ from tutti.models import User, Booking
 
 numOfPeoplePerSlot = 30
 
-def numSeatsForDate(date_string):
+def numSeatsForDate(date_string, time_string):
     # Return the number of seats left for a given date
-    # Date is string with format yy-mm-dd
+    # Date is string with format yyyy-mm-dd
+    # Time is string with format HH:mm
     dt = datetime.strptime(date_string, '%Y-%m-%d').date()
-    nop = Booking.objects.filter(date=dt).aggregate(Sum('numberOfPeople'))
-    seats_left = numOfPeoplePerSlot - nop["numberOfPeople__sum"]
+    nop = Booking.objects.filter(date=dt, time=time_string).aggregate(Sum('numberOfPeople'))
+    seats_left = 0
+
+    if nop["numberOfPeople__sum"] != None:
+        seats_left = numOfPeoplePerSlot - nop["numberOfPeople__sum"]
+
     return seats_left
+
 
 def dateForNumSeats(numSeatRequested):
     # Return which date and time is available for that number of seats
@@ -41,4 +47,4 @@ def dateForNumSeats(numSeatRequested):
 
 
 if __name__ == "__main__":
-    dateForNumSeats(10)
+    print(numSeatsForDate('2023-01-03', '16:00'))
