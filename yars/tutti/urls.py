@@ -10,4 +10,5 @@ urlpatterns = [
     path('booking/date-and-time', views.booking_date_and_time, name='booking_date_time'),
     path('booking/confirmation', views.booking_confirmation, name='booking_confirmation'),
     path('booking/completed', views.booking_completed, name='booking_completed'),
+    path('menu/', views.booking_completed, name='booking_completed'),
 ]

@@ -1,7 +1,7 @@
 from django import forms
 from tutti.models import Review, Booking
 
-numOfPeopleChoices =(
+numOfPeopleChoices = (
     ("1", "One"),
     ("2", "Two"),
     ("3", "Three"),
@@ -10,8 +10,9 @@ numOfPeopleChoices =(
     ("6", "Six"),
 )
 
-class numPeopleForm(forms.Modelform):
-    numofPeople = forms.ChoiceField(numOfPeopleChoices)
+class numPeopleForm(forms.Form):
+    numofPeople = forms.ChoiceField(choices = numOfPeopleChoices)
 
-class dateTimeForm(forms.Modelform):
+
+# class dateTimeForm(forms.Modelform):
     
