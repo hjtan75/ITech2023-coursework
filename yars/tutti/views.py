@@ -5,7 +5,7 @@ from django.views import View
 from django.contrib.auth.decorators import login_required
 from tutti.models import User, Booking
 from django.http import JsonResponse
-
+import tutti.booking_function
 
 # Create your views here.
 def index(request):
@@ -65,9 +65,12 @@ class EditBookingView(View):
         date = request.GET['date']
         time = request.GET['time']
         notes = request.GET['notes']
+        seat = tutti.booking_function.numSeatsForDate(date)
+        print("seat num")
+        print(seat)
         try:
             bookings = Booking.objects.get(bookingID=booking_id)
-            print(bookings)
+            #print(bookings)
         except bookings.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
@@ -79,3 +82,36 @@ class EditBookingView(View):
         bookings.save()
 
         return JsonResponse({'status': 'success'})
+
+
+def booking(request):
+    context_dict = {}
+    context_dict['numOfPeoples'] = [1, 2, 3, 4, 5, 6]
+
+    return render(request, 'tutti/booking_num_people.html', context=context_dict)
+
+
+def booking_date_and_time(request):
+    context_dict = {}
+    context_dict['months'] = ['June', 'July', 'August', 'September']
+    context_dict['days'] = ['01', '02', '05', '06']
+    context_dict['times'] = ['0500', '0900', '1230', '1500']
+
+    return render(request, 'tutti/booking_date_time.html', context=context_dict)
+
+
+def booking_confirmation(request):
+    context_dict = {}
+    context_dict['user'] = 'Adam Smith'
+    context_dict['phone'] = '07465898556'
+    context_dict['email'] = 'testing@testing.com'
+    context_dict['datatime'] = '19:30 26 February 2022'
+    context_dict['numOfPeoples'] = 5
+
+    return render(request, 'tutti/booking_confirmation.html', context=context_dict)
+
+
+def booking_completed(request):
+    return render(request, 'tutti/booking_completed.html')
+
+

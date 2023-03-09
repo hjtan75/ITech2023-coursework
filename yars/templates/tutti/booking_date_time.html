@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book an appointment</title>
+</head>
+<body>
+
+<h1>Enter the number of people</h1>
+<div>
+    {% comment %} Selection of data time for booking {% endcomment %}
+    <label for="datetime-select">Select a date & time:</label>
+    <select name="Month" id="month-select">
+        <option value="">--Please choose month--</option>
+    {% for month in months %}
+        <option value={{ month }}><td>{{ month }}</td></option>
+    {% endfor %}
+    </select>
+    <select name="Day" id="day-select">
+        <option value="">--Please choose day--</option>
+    {% for day in days %}
+        <option value={{ day }}><td>{{ day }}</td></option>
+    {% endfor %}
+    </select>
+    <select name="Time" id="time-select">
+        <option value="">--Please choose time--</option>
+    {% for time in times %}
+        <option value={{ time }}><td>{{ time }}</td></option>
+    {% endfor %}
+    </select>
+</div>
+</body>
+</html>
