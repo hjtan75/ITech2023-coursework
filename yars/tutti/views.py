@@ -33,6 +33,7 @@ def show_bookings(request):
 def reviews(request):
     if request.method == 'POST':
         ...
+    # reviews_ = Review.objects.filter(user_id=1)
     reviews_ = Review.objects.all()
     return render(request, 'tutti/review.html', context={'reviews': reviews_})
 
