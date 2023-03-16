@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book an appointment</title>
+</head>
+<body>
+
+<h1>Enter the number of people</h1>
+<div>
+    <label for="pet-select">Select Number of people:</label>
+
+    <select name="pets" id="pet-select">
+        <option value="">--Please choose an option--</option>
+    {% for numOfPeople in numOfPeoples %}
+        <option value={{ numOfPeople }}><td>{{ numOfPeople }}</td></option>
+    {% endfor %}
+    </select>
+</div>
+</body>
+</html>

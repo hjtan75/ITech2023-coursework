@@ -1,5 +1,6 @@
 import os
 import random
+from datetime import datetime
 from faker import Faker
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yars.settings')
 
@@ -30,13 +31,15 @@ def populate():
         # print(f'User: {userName} | {userPassword} | {userEmail} |{phoneNum} | {address} | {gender}')
 
         for _ in range(random.randint(0,5)):
-            booking_date = faker.date()
-            booking_time = random.choice(timeSlots)
+            start_dt = datetime.strptime('2023-01-01', '%Y-%m-%d').date()
+            end_dt = datetime.strptime('2023-03-08', '%Y-%m-%d').date()
+            booking_date = faker.date_between(start_dt, end_dt)
+            booking_time = random.choice(timeSlots)[0]
             booking_numberOfPeople = random.randint(1,6)
             booking_notes = faker.text(max_nb_chars=1000)
             booking_bookingStatus = random.choice([True, False])
             add_booking(userProfileObj, booking_date, booking_time, booking_numberOfPeople, booking_notes, booking_bookingStatus)
-            # print(f'Booking: {booking_date} | {booking_numberOfPeople} | {booking_notes} | {booking_bookingStatus}')
+            # print(f'Booking: {booking_date} | {booking_time} | {booking_numberOfPeople} | {booking_notes} | {booking_bookingStatus}')
 
         for _ in range(random.randint(0,2)):
             review_rating = random.randint(1, 5)
