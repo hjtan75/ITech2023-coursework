@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from tutti.models import User, Booking
 from tutti.forms import numPeopleForm
+from tutti.models import Review, User, Booking
+from django.template.defaultfilters import register
 # Create your views here.
 def index(request):
     return HttpResponse("Rango says hey there partner!")
@@ -29,6 +31,7 @@ def show_bookings(request):
 
     # Go render the response and return it to the client.
     return render(request, 'tutti/show_bookings.html', context=context_dict)
+
 
 
 def booking(request):
@@ -72,4 +75,16 @@ def booking_confirmation(request):
 
 def booking_completed(request):
     return render(request, 'tutti/booking_completed.html')
+
+
+def reviews(request):
+    if request.method == 'POST':
+        ...
+    # reviews_ = Review.objects.filter(user_id=1)
+    reviews_ = Review.objects.all()
+    return render(request, 'tutti/review.html', context={'reviews': reviews_})
+
+@register.filter
+def range_(value):
+    return range(value)
 
