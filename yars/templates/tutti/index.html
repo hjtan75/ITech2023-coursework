@@ -1,0 +1,26 @@
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Tutti says...</h1>
+        <div>
+            <h2 class="h2">
+            {% if user.is_authenticated %}
+                howdy {{ user.username }}!
+            {% else %}
+                hey there partner!
+            {% endif %}
+            </h2>
+            <strong>{{ boldmessage }}</strong>
+        </div>
+    </div>
+</div>
+
+<img src="{% static 'images/rango.jpg' %}" alt="Picture of Rango" />
+{% endblock %}

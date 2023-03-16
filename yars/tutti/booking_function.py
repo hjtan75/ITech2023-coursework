@@ -17,7 +17,11 @@ def numSeatsForDate(date_string, time_string):
     # Time is string with format HH:mm
     dt = datetime.strptime(date_string, '%Y-%m-%d').date()
     nop = Booking.objects.filter(date=dt, time=time_string).aggregate(Sum('numberOfPeople'))
+<<<<<<< HEAD:yars/booking_function.py
     seats_left = 0
+=======
+    seats_left = 30
+>>>>>>> huapeng:yars/tutti/booking_function.py
 
     if nop["numberOfPeople__sum"] != None:
         seats_left = numOfPeoplePerSlot - nop["numberOfPeople__sum"]
