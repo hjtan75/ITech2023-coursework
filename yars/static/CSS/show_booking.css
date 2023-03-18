@@ -10,7 +10,9 @@ h1 {
     text-align: center;
     margin-top: 50px;
 }
-
+.booking-login{
+    right:10%;
+}
 .show_booking {
     display: flex;
     justify-content: center;
