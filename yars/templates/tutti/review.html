@@ -9,32 +9,31 @@
 <body>
 <br>
 <div class="layui-fluid">
-        <div class="layui-col-md6 layui-col-md-offset3">
-            <h1 style="text-align: center">Reviews</h1>
-        </div>
-    
-        {% for review in reviews %}
-            <div class="layui-col-md6 layui-col-md-offset3">
-                <fieldset class="layui-elem-field">
-                    <legend>{{ review.user.user.username }}
-                        {% for rate in 5|range_ %}
-                            {% if rate < review.rating %}
-                                <i class="layui-icon layui-icon-star-fill" style="color:orange"></i>
-                            {% else %}
-                                <i class="layui-icon layui-icon-star" style="color:orange"></i>
-                            {% endif %}
-                        {% endfor %}
-                    </legend>
-                    <div class="layui-field-box" style="text-align: justify;">
-                        {{ review.description }}
-                    </div>
-                </fieldset>
-            </div>
-        {% endfor %}
-        <div class="layui-col-md1 layui-col-md-offset8">
-            <input class="layui-btn layui-btn-fluid" type="button" value="Add Review" onclick="onAddReviewClick()"/>
-        </div>
+    <div class="layui-col-md6 layui-col-md-offset3">
+        <h1 style="text-align: center">Reviews</h1>
     </div>
+    {% for review in reviews %}
+        <div class="layui-col-md6 layui-col-md-offset3">
+            <fieldset class="layui-elem-field">
+                <legend>{{ review.user.user.username }}
+                    {% for rate in 5|range_ %}
+                        {% if rate < review.rating %}
+                            <i class="layui-icon layui-icon-star-fill" style="color:orange"></i>
+                        {% else %}
+                            <i class="layui-icon layui-icon-star" style="color:orange"></i>
+                        {% endif %}
+                    {% endfor %}
+                </legend>
+                <div class="layui-field-box" style="text-align: justify;">
+                    {{ review.description }}
+                </div>
+            </fieldset>
+        </div>
+    {% endfor %}
+    <div class="layui-col-md1 layui-col-md-offset8">
+        <input class="layui-btn layui-btn-fluid" type="button" value="Add Review" onclick="onAddReviewClick()"/>
+    </div>
+</div>
 </div>
 <br>
 <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
@@ -48,7 +47,8 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">Description</label>
             <div class="layui-input-inline">
-                <textarea id="description" name="description" placeholder="Please input your description" class="layui-textarea"
+                <textarea id="description" name="description" placeholder="Please input your description"
+                          class="layui-textarea"
                           style="width: 400px"></textarea>
             </div>
         </div>
@@ -83,15 +83,32 @@
                 shadeClose: true,
                 yes: function (index, layero) {
                     let description = $("#description").val();
-                    alert("Add " + rating + " " + "stars" + " " + description);
+                    $.ajax({
+                        type: "POST",
+                        url: "{% url 'tutti:reviews' %}",
+                        data: {
+                            csrfmiddlewaretoken: "{{ csrf_token }}",
+                            rating: rating,
+                            description: description
+                        },
+                        success: function (response) {
+                            if(response.status){
+                                layer.msg(response.msg, {icon: 6});
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 1500);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            layer.msg(xhr.responseText, {icon: 5});
+                        }
+                    });
                     layer.close(index);
                 },
                 btn2: function (index, layero) {
                     layer.close(index);
                 }
             });
-
-            
         }
 
     });
