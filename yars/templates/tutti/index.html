@@ -1,0 +1,29 @@
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block body_block %}
+<div class="jumbotron p-4">
+    <div class="container">
+        <div class="text-center">
+      <h1 class="jumbotron-heading">Book Your Appointment Today!</h1>
+      <button class="btn btn-primary">Book Now</button>
+    </div>
+        <div>
+            <h2 class="h2">
+            {% if user.is_authenticated %}
+                Welcome {{ user.username }}!
+            {% else %}
+                hey there partner!
+            {% endif %}
+            </h2>
+            <strong>Book Now!</strong>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
