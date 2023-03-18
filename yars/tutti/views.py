@@ -65,7 +65,6 @@ def reviews(request):
     reviews_ = Review.objects.all()
     return render(request, 'tutti/review.html', context={'reviews': reviews_})
 
-
 @register.filter
 def range_(value):
     return range(value)
