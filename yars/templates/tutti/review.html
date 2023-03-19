@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tuitti Pizza Reservation System</title>
-    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
-</head>
-<body>
-<br>
+{% extends "tutti/base.html" %}
+{% block title_block %}
+Tuitti Pizza Reservation Syste
+{% endblock %}
+{% block body_block %}
 <div class="layui-fluid">
     <div class="layui-col-md6 layui-col-md-offset3">
         <h1 style="text-align: center">Reviews</h1>
@@ -34,11 +29,9 @@
         <input class="layui-btn layui-btn-fluid" type="button" value="Add Review" onclick="onAddReviewClick()"/>
     </div>
 </div>
-</div>
 <br>
 <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
-</body>
-<div id="add_review" hidden="hidden">
+<div id="add_review" style="display: none">
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">Rate</label>
@@ -55,8 +48,6 @@
     </form>
 </div>
 <script>
-
-
     function onAddReviewClick() {
     }
 
@@ -74,6 +65,8 @@
         });
 
         onAddReviewClick = function () {
+            console.log("Clicked")
+            console.log($('#add_review'))
             layer.open({
                 type: 1,
                 title: 'Add review',
@@ -112,4 +105,4 @@
         }
     });
 </script>
-</html>
+{% endblock %}

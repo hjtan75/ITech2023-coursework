@@ -227,28 +227,14 @@ def reviews(request):
                 description = request.POST.get('description')
                 review = Review(user=user, rating=rating, description=description)
                 review.save()
-                html = '''<div class="layui-col-md6 layui-col-md-offset3">
-                <fieldset class="layui-elem-field">
-                <legend>''' + review.user.user.username
-                for i in range(5):
-                    if i < int(review.rating):
-                        html += '''<i class="layui-icon layui-icon-star-fill" style="color:orange"></i>'''
-                    else:
-                        html += '''<i class="layui-icon layui-icon-star" style="color:orange"></i>'''
-                html += '''
-                </legend>
-                <div class="layui-field-box" style="text-align: justify;">
-                    ''' + review.description + '''
-                </div>
-            </fieldset>
-        </div>'''
-                return JsonResponse({"success": True, "msg": "Added successfully.", 'html': html})
+                return JsonResponse({"status": True, "msg": "Added successfully."})
             except Exception as e:
-                return JsonResponse({"success": False, "msg": "Failed to add."})
+                return JsonResponse({"status": False, "msg": "Failed to add."})
         else:
-            return JsonResponse({"success": False, "msg": "Please login first."})
+            return JsonResponse({"status": False, "msg": "Please login first."})
     reviews_ = Review.objects.all()
     return render(request, 'tutti/review.html', context={'reviews': reviews_})
+
 
 @register.filter
 def range_(value):
