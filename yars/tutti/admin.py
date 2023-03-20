@@ -15,3 +15,7 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Review, ReviewAdmin)
+
+
+
+
