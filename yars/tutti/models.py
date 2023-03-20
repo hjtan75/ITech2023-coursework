@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Function to create predefined timeslots for booking
 def createTimeSlotsTuple():
     startHour = 12
-    endHour = 20
+    endHour = 24
 
     timeslots = []
     for hour in range(startHour, endHour+1):
