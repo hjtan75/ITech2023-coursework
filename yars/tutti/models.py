@@ -26,7 +26,6 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
 class Booking(models.Model):
     # bookingStatus: true = expired booking, false = pending booking
     timeSlots = createTimeSlotsTuple()
@@ -35,7 +34,7 @@ class Booking(models.Model):
     date = models.DateField()
     time = models.CharField(max_length=5, choices=timeSlots, default=timeSlots[0])
     numberOfPeople = models.IntegerField()
-    notes = models.CharField(max_length=1000)
+    notes = models.CharField(max_length=1000, blank=True)
     bookingStatus = models.BooleanField()
 
     def __str__(self):

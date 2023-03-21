@@ -30,18 +30,10 @@
     </select> {% endcomment %}
 
     <div>
-        <form id="num_people_form" method="post" action="/tutti/booking/">
+        <form id="booking_date" method="post" action="{% url 'tutti:booking_date' %}">
             {% csrf_token %}
-            {% comment %} {% for hidden in form.hidden_fields %}
-                {{ hidden }}
-            {% endfor %}
-            {% for field in form.visible_fields %}
-                {{ field.errors }}
-                {{ field.help_text }}
-                {{ field }}
-            {% endfor %} {% endcomment %}
             {{ form }}
-            <input type="submit" name="submit" value="Next" />
+            <input type="submit" name="submit" value="Next">
         </form>
     </div>
 </div>

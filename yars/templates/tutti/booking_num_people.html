@@ -8,14 +8,11 @@
 
 <h1>Enter the number of people</h1>
 <div>
-    <label for="pet-select">Select Number of people:</label>
-
-    <select name="pets" id="pet-select">
-        <option value="">--Please choose an option--</option>
-    {% for numOfPeople in numOfPeoples %}
-        <option value={{ numOfPeople }}><td>{{ numOfPeople }}</td></option>
-    {% endfor %}
-    </select>
+    <form id="booking_num_people" method="post" action="{% url 'tutti:booking_num_people' %}">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" name="submit" value="next">
+    </form>
 </div>
 </body>
 </html>

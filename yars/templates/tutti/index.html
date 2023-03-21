@@ -6,21 +6,18 @@
 {% endblock %}
 
 {% block body_block %}
-<div class="jumbotron p-4">
+<div id="landing_page_jumbotron_id" class="jumbotron p-8">
     <div class="container">
         <div class="text-center">
-      <h1 class="jumbotron-heading">Book Your Appointment Today!</h1>
-      <button class="btn btn-primary">Book Now</button>
+      <h1 id="landing_page_jumbotron_title_id" class="jumbotron-heading mb-5 display-4"><strong>Book Your Appointment Today!</strong></h1>
+      <a class="btn btn-success btn-lg" href="{% url 'tutti:booking_num_people' %}">Book Now</a>
     </div>
         <div>
             <h2 class="h2">
             {% if user.is_authenticated %}
-                Welcome {{ user.username }}!
-            {% else %}
-                hey there partner!
+                <h2>Welcome {{ user.username }}!</h2>
             {% endif %}
             </h2>
-            <strong>Book Now!</strong>
         </div>
     </div>
 </div>

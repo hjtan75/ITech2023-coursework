@@ -14,25 +14,28 @@
 
 <h1>Confirmation</h1>
 <div>
-    {% comment %} Selection of data time for booking {% endcomment %}
-    <label for="datetime-select">Your Booking Details</label>
-    <table style='width:50%'>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Booking Time</th>
-            <th>Number of People</th>
-        </tr>
-        <tr>
-            <td>{{ user }}</td>
-            <td>{{ phone }}</td>
-            <td>{{ email }}</td>
-            <td>{{ datatime }}</td>
-            <td>{{ numOfPeoples }}</td>
-        </tr>
-    </table>
-    <button type="button">Confirm</button>
+    <h3>Time</h3>
+    <p>{{ chosen_time }}</p>
+    <h3>Date</h3>
+    <p>{{ chosen_date }}</p>
+    <h3>Seats</h3>
+    <p>{{ numOfPeople }}</p>
+    <h3>Name</h3>
+    <p>{{ user_name }}</p>
+    <h3>Email</h3>
+    <p>{{ user_email }}</p>
+    <h3>Phone Number</h3>
+    <p>{{ user_phone_number }}</p>
+    <h3>Address</h3>
+    <p>{{ user_address }}</p>
+    <h3>Notes</h3>
+    <p>{{ notes }}</p>
+</div>
+<div>
+    <div>
+        <a href="{% url 'tutti:booking_completed' %}">Confirm</a>
+        <a href="{% url 'tutti:index' %}">Cancel</a>
+    </div>
 </div>
 </body>
 </html>
