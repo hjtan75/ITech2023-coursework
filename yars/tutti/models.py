@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Function to create predefined timeslots for booking
 def createTimeSlotsTuple():
     startHour = 12
-    endHour = 20
+    endHour = 24
 
     timeslots = []
     for hour in range(startHour, endHour+1):
@@ -33,7 +33,7 @@ class Booking(models.Model):
     bookingID = models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     date = models.DateField()
-    time = models.CharField(max_length=2, choices=timeSlots, default=timeSlots[0])
+    time = models.CharField(max_length=5, choices=timeSlots, default=timeSlots[0])
     numberOfPeople = models.IntegerField()
     notes = models.CharField(max_length=1000)
     bookingStatus = models.BooleanField()
@@ -51,3 +51,17 @@ class Review(models.Model):
     def __str__(self):
         return str(self.reviewID)
     
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    background_image = models.ImageField(upload_to='category_backgrounds/')
+    def __str__(self):
+        return self.name
+
+class MenuSpecific(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=5, decimal_places=1)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

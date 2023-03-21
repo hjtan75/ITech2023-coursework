@@ -1,4 +1,4 @@
-db.sqlite3
+yars/db.sqlite3
 .vscode
 *.pyc
 tutti/migrations/*
