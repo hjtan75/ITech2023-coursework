@@ -16,6 +16,7 @@ urlpatterns = [
     path('booking_time/', views.booking_time, name='booking_time'),
     path('booking_confirmation/', views.booking_confirmation, name='booking_confirmation'),
     path('booking_completed/', views.booking_completed, name='booking_completed'),
-    # path('menu/', views.booking_completed, name='booking_completed'),
     path('reviews/', views.reviews, name='reviews'),
+    path('about/', views.about, name='about'),
+    path('menu/', views.menu, name='menu'),
 ]
