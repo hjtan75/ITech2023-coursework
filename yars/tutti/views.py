@@ -13,7 +13,7 @@ from tutti.models import Review, User, Booking
 from django.template.defaultfilters import register
 
 from django.urls import reverse
-
+from .models import Category, MenuSpecific
 
 # Create your views here.
 def index(request):
@@ -107,7 +107,9 @@ def show_bookings(request):
         # Can we find a booking with the given username?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # The .get() method returns one model instance or raises an exception.
-        bookings = Booking.objects.filter(user_id=9)
+        user_id = request.user.id
+        #print(user_id)
+        bookings = Booking.objects.filter(user_id=user_id)
         # print(bookings[0].time)
         # print(bookings[0].date)
         # Retrieve all of the associated bookings.
@@ -116,7 +118,6 @@ def show_bookings(request):
 
     except Booking.DoesNotExist:
         # We get here if we didn't find the specified booking.
-        # Don't do anything -
         # the template will display the "no category" message for us.
         context_dict['bookings'] = None
 
@@ -229,4 +230,12 @@ def reviews(request):
 def range_(value):
     return range(value)
 
+def menu(request):
+    categories = Category.objects.all()
+    menu_specific = MenuSpecific.objects.all()
+    context = {'categories': categories, 'menu_specific': menu_specific}
+    return render(request, 'tutti/menu.html', context)
 
+
+def about(request):
+    return render(request, 'tutti/about_page.html')

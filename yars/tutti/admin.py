@@ -1,5 +1,6 @@
 from django.contrib import admin
 from tutti.models import UserProfile, Booking, Review
+from .models import Category, MenuSpecific
 # Register your models here.
 
 class UserProfileAdmin(admin.ModelAdmin):
@@ -15,3 +16,10 @@ class ReviewAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Booking, BookingAdmin)
 admin.site.register(Review, ReviewAdmin)
+
+admin.site.register(Category)
+admin.site.register(MenuSpecific)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'background_image']
+class MenuSpecificAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description', 'price', 'category']
