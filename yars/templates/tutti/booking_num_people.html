@@ -1,12 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book an appointment</title>
-</head>
-<body>
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
 
-<h1>Enter the number of people</h1>
+{% block title_block %}
+    Book an appointment
+{% endblock %}
+
+{% block body_block %}
+<h1>Enter the Seats</h1>
 <div>
     <form id="booking_num_people" method="post" action="{% url 'tutti:booking_num_people' %}">
         {% csrf_token %}
@@ -14,5 +14,4 @@
         <input type="submit" name="submit" value="next">
     </form>
 </div>
-</body>
-</html>
+{% endblock body_block %}

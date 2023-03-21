@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book an appointment</title>
-</head>
-<body>
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
 
-<style>
-    table, th, td {
-        border:1px solid black;
-    }
-</style>
+{% block title_block %}
+    Book an appointment
+{% endblock %}
 
+{% block body_block %}
 <h1>Confirmation</h1>
 <div>
     <h3>Time</h3>
@@ -37,5 +31,4 @@
         <a href="{% url 'tutti:index' %}">Cancel</a>
     </div>
 </div>
-</body>
-</html>
+{% endblock body_block %}

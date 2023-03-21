@@ -1,34 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book an appointment</title>
-</head>
-<body>
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
 
-<h1>Enter the number of people</h1>
+{% block title_block %}
+    Book an appointment
+{% endblock %}
+
+{% block body_block %}
+<h1>Select a time</h1>
 <div>
-    {% comment %} Selection of data time for booking
-    <label for="datetime-select">Select a date & time:</label>
-    <select name="Month" id="month-select">
-        <option value="">--Please choose month--</option>
-    {% for month in months %}
-        <option value={{ month }}><td>{{ month }}</td></option>
-    {% endfor %}
-    </select>
-    <select name="Day" id="day-select">
-        <option value="">--Please choose day--</option>
-    {% for day in days %}
-        <option value={{ day }}><td>{{ day }}</td></option>
-    {% endfor %}
-    </select>
-    <select name="Time" id="time-select">
-        <option value="">--Please choose time--</option>
-    {% for time in times %}
-        <option value={{ time }}><td>{{ time }}</td></option>
-    {% endfor %}
-    </select> {% endcomment %}
-
     <div>
         <form id="booking_time" method="post" action="{% url 'tutti:booking_time' %}">
             {% csrf_token %}
@@ -37,5 +16,4 @@
         </form>
     </div>
 </div>
-</body>
-</html>
+{% endblock body_block %}
