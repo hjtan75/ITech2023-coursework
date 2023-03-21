@@ -6,12 +6,28 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Enter the Seats</h1>
-<div>
-    <form id="booking_num_people" method="post" action="{% url 'tutti:booking_num_people' %}">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" name="submit" value="next">
-    </form>
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Select number of seats</h1>
+    </div>
+</div>
+<div class="container">
+    <div class="form-group p-5">
+        <form id="booking_num_people" method="post" action="{% url 'tutti:booking_num_people' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for={{ form.numberOfPeople.id_for_label }}>{{ form.numberOfPeople.label }}</label>
+                <select id="form.numberOfPeople.id_for_label" name="numberOfPeople" class="form-control">
+                {% for x, y in form.fields.numberOfPeople.choices %}
+                    <option value="{{ x }}"{% if form.fields.numberOfPeople.value == x %} selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="container text-center">
+                <input class="btn btn-success" type="submit" name="submit" value="Next">
+            </div>
+            
+        </form>
+    </div>
 </div>
 {% endblock body_block %}

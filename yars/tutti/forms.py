@@ -28,11 +28,7 @@ def createTimeSlotsTuple():
     return tuple(timeslots)
 
 class BookingDateForm(forms.Form):
-    date = forms.DateField(widget=forms.SelectDateWidget(empty_label=("Choose Year", "Choose Month", "Choose Day"),
-                                                         years=(2023, 2024)))
-
-    # def __init__(self):
-    #     self.date
+    date = forms.DateField()
     
     
 
@@ -45,18 +41,6 @@ class BookingTimeForm(forms.Form):
 class numPeopleForm(forms.Form):
     numberOfPeople = forms.ChoiceField(label="Number of people",choices=numOfPeopleChoices) 
 
-
-# class BookingConfirmationForm(forms.ModelForm):
-    # timeSlots = createTimeSlotsTuple()
-    # date  = forms.DateField(widget=forms.HiddenInput(), initial=datetime.now().date())
-    # time = forms.ChoiceField(widget=forms.HiddenInput(), choices=timeSlots, initial=timeSlots[0])
-    # numOfPeople = forms.IntegerField(widget=forms.HiddenInput(), initial=1)
-    # notes = forms.CharField(widget=forms.HiddenInput(), max_length=1000, initial="", required=False)
-    # bookingStatus = forms.BooleanField(widget=forms.HiddenInput(), initial=True)
-
-    # class Meta:
-    #     model = Booking
-    #     fields = ()
 
 
 class UserProfileForm(forms.ModelForm):

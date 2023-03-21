@@ -10,7 +10,7 @@ body {
 
 h1 {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 20px;
 }
 .booking-login{
     right: 3%;
@@ -35,6 +35,11 @@ h1 {
 .review-div {
     border-color: black;
     border-style: dashed;
+}
+
+.completed_card {
+    margin-left: 20rem;
+    margin-right: 20rem;
 }
 
 table {

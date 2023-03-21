@@ -8,27 +8,53 @@
 {% block body_block %}
 <h1>Confirmation</h1>
 <div>
-    <h3>Time</h3>
-    <p>{{ chosen_time }}</p>
-    <h3>Date</h3>
-    <p>{{ chosen_date }}</p>
-    <h3>Seats</h3>
-    <p>{{ numOfPeople }}</p>
-    <h3>Name</h3>
-    <p>{{ user_name }}</p>
-    <h3>Email</h3>
-    <p>{{ user_email }}</p>
-    <h3>Phone Number</h3>
-    <p>{{ user_phone_number }}</p>
-    <h3>Address</h3>
-    <p>{{ user_address }}</p>
-    <h3>Notes</h3>
-    <p>{{ notes }}</p>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Time</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ chosen_time }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Date</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ chosen_date }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_name }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Email</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_email }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Phone Number</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_phone_number }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Address</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_address }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Notes</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ notes }}</h6>
+        </div>
+    </div>
 </div>
 <div>
-    <div>
-        <a href="{% url 'tutti:booking_completed' %}">Confirm</a>
-        <a href="{% url 'tutti:index' %}">Cancel</a>
+    <div class="container text-center mt-3">
+        <a class="btn btn-success" href="{% url 'tutti:booking_completed' %}">Confirm</a>
+        <a class="btn btn-success" href="{% url 'tutti:index' %}">Cancel</a>
     </div>
 </div>
 {% endblock body_block %}

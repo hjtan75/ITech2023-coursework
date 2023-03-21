@@ -6,14 +6,32 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Select a time</h1>
-<div>
-    <div>
-        <form id="booking_time" method="post" action="{% url 'tutti:booking_time' %}">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" name="submit" value="Next">
-        </form>
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Select a time</h1>
     </div>
 </div>
+<div class="container">
+    <div class="form-group p-5">
+        <form id="booking_time" method="post" action="{% url 'tutti:booking_time' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for={{ form.time.id_for_label }}>{{ form.time.label }}</label>
+                <select id="form.time.id_for_label" name="time" class="form-control">
+                {% for x, y in form.fields.time.choices %}
+                    <option value="{{ x }}"{% if form.fields.time.value == x %} selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>
+                <textarea type="text" name="notes" class="form-control" id="{{ form.notes.id_for_label }}" row=3></textarea>
+            </div>
+            <div class="container text-center">
+                <input class="btn btn-success" type="submit" name="submit" value="Next">
+            </div>
+            
+        </form>
+    </div>
+</div> 
 {% endblock body_block %}

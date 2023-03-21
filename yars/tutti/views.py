@@ -106,9 +106,10 @@ def show_bookings(request):
         # Can we find a booking with the given username?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # The .get() method returns one model instance or raises an exception.
-        user_id = request.user.id
-        #print(user_id)
-        bookings = Booking.objects.filter(user_id=user_id)
+        current_user = UserProfile.objects.filter(user=request.user).first()
+        bookings = Booking.objects.filter(user=current_user)
+        # print(user_id)
+        print(bookings)
         # print(bookings[0].time)
         # print(bookings[0].date)
         # Retrieve all of the associated bookings.
@@ -279,8 +280,8 @@ def booking_completed(request):
                       numberOfPeople=numOfPeople, notes=notes, bookingStatus=True)
     # Clear session
     booking.save()
-    request.session['chosen_time'] = None
-    request.session['numOfPeople'] = None
+    # request.session['chosen_time'] = None
+    # request.session['numOfPeople'] = None
 
     return render(request, 'tutti/booking_completed.html')
 

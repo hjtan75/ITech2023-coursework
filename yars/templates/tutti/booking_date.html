@@ -6,14 +6,27 @@
 {% endblock %}
 
 {% block body_block %}
-<h1>Select a Date</h1>
-<div>
-    <div>
-        <form id="booking_date" method="post" action="{% url 'tutti:booking_date' %}">
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Select a Date</h1>
+    </div>
+</div>
+<div class-"container">
+    <div class="form-group p-5">
+        <form class="mx-5 px-5 "id="booking_date" method="post" action="{% url 'tutti:booking_date' %}">
             {% csrf_token %}
-            {{ form }}
-            <input type="submit" name="submit" value="Next">
+            <div class="form-group">
+                <label for="{{ form.date.id_for_label }}">{{ form.date.label }}</label>
+                <input type="text" name="date" class="form-control" id="{{ form.date.id_for_label }}"></input>
+            </div>
+            <div class="container text-center">
+                <input class="btn btn-success" type="submit" name="submit" value="Next">
+            </div>
         </form>
     </div>
 </div>
 {% endblock body_block %}
+
+{% block js %}
+<script src="{% static 'js/bookingDate-jquery.js' %}"></script>
+{% endblock js %}

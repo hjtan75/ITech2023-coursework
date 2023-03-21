@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     // datepicker and timepicker from jquery to choose date and time for the booking
     $("#bookingDate").datepicker({
-            dateFormat: "yy-mm-dd"
+            dateFormat: "yy/mm/dd"
          });
     $("#bookingTime").timepicker();
 
