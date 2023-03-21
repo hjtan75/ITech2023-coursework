@@ -149,7 +149,8 @@ class EditBookingView(View):
         numOFPeople = int(request.GET['numberOFPeople'])
         date = request.GET['date']
         time = request.GET['time']
-        # print(time)
+        print(type(date))
+        print(f'edit new date is {date}')
         notes = request.GET['notes']
         seats_left = tutti.booking_function.numSeatsForDate(date, time)
         # print("seat num")

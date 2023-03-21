@@ -38,7 +38,14 @@ def numSeatsForDate(date_string, time_string):
     # Date is string with format yyyy-mm-dd
     # Time is string with format HH:mm
     dt = datetime.strptime(date_string, '%Y-%m-%d').date()
-    nop = Booking.objects.filter(date=dt, time=time_string).aggregate(Sum('numberOfPeople'))
+    year_str = dt.strftime('%Y')
+    month_str = dt.strftime('%m')
+    day_str = dt.strftime('%d')
+    print(year_str, month_str, day_str)
+    nop = Booking.objects.filter(date__year=year_str, 
+                                 date__month=month_str, 
+                                 date__day=day_str, 
+                                 time=time_string).aggregate(Sum('numberOfPeople'))
 
     seats_left = 30
 

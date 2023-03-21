@@ -31,8 +31,10 @@ $(document).ready(function() {
             var time = $("#bookingTime").val();
             var numberOFPeople = $("#numberOFPeople").val();
             var notes = $("#Description-text").val();
-            //alert(date);
-            //alert(time);
+            var bookingDate = new Date($('#bookingDate').val());
+            var date = bookingDate.getFullYear() + '-' + ('0' + (bookingDate.getMonth()+1)).slice(-2) + '-' + ('0' + bookingDate.getDate()).slice(-2);
+            // alert(date);
+            // alert(time);
             var time24 = convertTo24HourFormat(time);
             //alert(time24);
             //alert(numberOFPeople);
