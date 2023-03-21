@@ -5,6 +5,7 @@ body {
     align-items: center;
     min-height: calc(100vh - 30px);
     background-color: rgb(237, 237, 237);
+    margin-bottom: 5rem;
 }
 
 h1 {
@@ -25,6 +26,15 @@ h1 {
     min-height: calc(100vh - 150px);
     max-width: 80%;
     max-height: 80%;
+}
+
+.review_star {
+    color:orange
+}
+
+.review-div {
+    border-color: black;
+    border-style: dashed;
 }
 
 table {

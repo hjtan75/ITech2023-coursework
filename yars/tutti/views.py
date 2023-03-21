@@ -9,7 +9,7 @@ from django.http import JsonResponse
 import tutti.booking_function
 from datetime import datetime, date
 # from tutti.forms import numPeopleForm
-
+from django.views.decorators.csrf import csrf_exempt
 from tutti.models import Review, User, Booking, Category, MenuSpecific
 from django.template.defaultfilters import register
 from django.urls import reverse
@@ -285,13 +285,25 @@ def booking_completed(request):
     return render(request, 'tutti/booking_completed.html')
 
 
-
+@csrf_exempt
+@login_required
 def reviews(request):
     if request.method == 'POST':
-        ...
-    # reviews_ = Review.objects.filter(user_id=1)
+        if request.user.is_authenticated:
+            try:
+                user = UserProfile.objects.filter(user__username=request.user.username).first()
+                rating = int(request.POST.get('rating', 0))
+                description = request.POST.get('description')
+                review = Review(user=user, rating=rating, description=description)
+                review.save()
+                return JsonResponse({"status": True, "msg": "Added successfully."})
+            except Exception as e:
+                return JsonResponse({"status": False, "msg": "Failed to add."})
+        else:
+            return JsonResponse({"status": False, "msg": "Please login first."})
     reviews_ = Review.objects.all()
     return render(request, 'tutti/review.html', context={'reviews': reviews_})
+
 
 @register.filter
 def range_(value):
