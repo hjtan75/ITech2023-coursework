@@ -1,3 +1,4 @@
+// the onAddReviewClick function is executed, when the Add Comment button is clicked
 function onAddReviewClick() {
 }
 
@@ -13,7 +14,7 @@ layui.use(['jquery', 'rate'], function () {
             rating = value;
         }
     });
-
+    // define the onAddReviewClick function to open the Add Comment pop-up window
     onAddReviewClick = function () {
         layer.open({
             type: 1,
@@ -22,30 +23,34 @@ layui.use(['jquery', 'rate'], function () {
             btn: ['Add', 'Cancel'],
             area: ['600px', 'auto'],
             shadeClose: true,
-            yes: function (index, layero) {
+            yes: function (index, layero) { // click the Confirm button
                 let description = $("#description").val();
+                // invoking Ajax for asynchronous submission
                 $.ajax({
                     type: "POST",
-                    url: "/tutti/reviews/",
+                    url: "/tutti/reviews/", // Url address
+                    // data that needs to be transferred to the background
                     data: {
                         rating: rating,
                         description: description
                     },
                     success: function (response) {
-                        if(response.status){
-                            layer.msg(response.msg, {icon: 6});
-                            setTimeout(function () {
+                        // asynchronous operation executed successfully
+                        if(response.status){ // if the response status is true
+                            layer.msg(response.msg, {icon: 6}); // display success prompt box
+                            setTimeout(function () { // refresh the page after 1.5s
                                 window.location.reload();
                             }, 1500);
                         }
                     },
                     error: function (xhr, status, error) {
-                        layer.msg(xhr.responseText, {icon: 5});
+                        // Asynchronous operation execution error
+                        layer.msg(xhr.responseText, {icon: 5}); // display error prompt box
                     }
                 });
-                layer.close(index);
+                layer.close(index); // close Popup
             },
-            btn2: function (index, layero) {
+            btn2: function (index, layero) { // click the cancel button
                 layer.close(index);
             }
         });

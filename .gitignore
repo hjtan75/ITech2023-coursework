@@ -6,3 +6,4 @@ tutti/__pycache__/*
 __pycache__
 migrations
 test.py
+.idea

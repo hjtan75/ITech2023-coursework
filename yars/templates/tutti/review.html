@@ -8,14 +8,17 @@ Tuitti Pizza Reservation Syste
     <div class="layui-col-md6 layui-col-md-offset3">
         <h1 style="text-align: center">Reviews</h1>
     </div>
+    <!-- cycle through each comment -->
     {% for review in reviews %}
         <div class="layui-col-md6 layui-col-md-offset3">
             <fieldset class="layui-elem-field review-div">
                 <div>
                     <legend>{{ review.user.user.username }}
                         {% for rate in 5|range_ %}
+                            <!-- fill in stars if the score is less than the current score -->
                             {% if rate < review.rating %}
                                 <i class="layui-icon layui-icon-star-fill review_star"></i>
+                            <!-- otherwise, do not fill the stars  -->
                             {% else %}
                                 <i class="layui-icon layui-icon-star review_star"></i>
                             {% endif %}
@@ -51,5 +54,6 @@ Tuitti Pizza Reservation Syste
         </div>
     </form>
 </div>
+    <!-- introducing a static file for review.js -->
     <script src="{% static 'js/review.js' %}"></script>
 {% endblock %}
