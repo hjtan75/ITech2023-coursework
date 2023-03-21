@@ -310,12 +310,13 @@ def reviews(request):
 def range_(value):
     return range(value)
 
+# Define menu view functions to handle requests for menu pages
 def menu(request):
     categories = Category.objects.all()
     menu_specific = MenuSpecific.objects.all()
     context = {'categories': categories, 'menu_specific': menu_specific}
     return render(request, 'tutti/menu.html', context)
 
-
+# Define the about view function to handle requests about our page
 def about(request):
     return render(request, 'tutti/about_page.html')

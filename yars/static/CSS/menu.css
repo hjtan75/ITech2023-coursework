@@ -68,3 +68,33 @@ h2 {
 .font-weight-bold {
     font-weight: bold;
 }
+
+nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+nav ul li:last-child {
+            margin-right: 0;
+        }
+
+nav ul li a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+nav ul li a:hover {
+            text-decoration: underline;
+        }
