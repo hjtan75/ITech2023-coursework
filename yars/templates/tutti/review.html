@@ -1,4 +1,5 @@
 {% extends "tutti/base.html" %}
+{% load staticfiles %}
 {% block title_block %}
 Tuitti Pizza Reservation Syste
 {% endblock %}
@@ -30,7 +31,8 @@ Tuitti Pizza Reservation Syste
     </div>
 </div>
 <br>
-<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+{% endblock %}
+{% block js %}
 <div id="add_review" style="display: none">
     <form class="layui-form" action="">
         <div class="layui-form-item">
@@ -47,63 +49,5 @@ Tuitti Pizza Reservation Syste
         </div>
     </form>
 </div>
-<script>
-    function onAddReviewClick() {
-    }
-
-    layui.use(['jquery', 'rate'], function () {
-        var $ = layui.jquery;
-        var rate = layui.rate;
-
-        var rating = 0;
-
-        rate.render({
-            elem: '#star',
-            choose: function (value) {
-                rating = value;
-            }
-        });
-
-        onAddReviewClick = function () {
-            console.log("Clicked")
-            console.log($('#add_review'))
-            layer.open({
-                type: 1,
-                title: 'Add review',
-                content: $('#add_review'),
-                btn: ['Add', 'Cancel'],
-                area: ['600px', 'auto'],
-                shadeClose: true,
-                yes: function (index, layero) {
-                    let description = $("#description").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "{% url 'tutti:reviews' %}",
-                        data: {
-                            csrfmiddlewaretoken: "{{ csrf_token }}",
-                            rating: rating,
-                            description: description
-                        },
-                        success: function (response) {
-                            if(response.status){
-                                layer.msg(response.msg, {icon: 6});
-                                setTimeout(function () {
-                                    window.location.reload();
-                                }, 1500);
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            layer.msg(xhr.responseText, {icon: 5});
-                        }
-                    });
-                    layer.close(index);
-                },
-                btn2: function (index, layero) {
-                    layer.close(index);
-                }
-            });
-            
-        }
-    });
-</script>
+    <script src="{% static 'js/review.js' %}"></script>
 {% endblock %}

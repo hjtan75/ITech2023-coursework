@@ -8,7 +8,7 @@ from tutti.forms import  UserProfileForm
 from django.http import JsonResponse
 import tutti.booking_function
 from tutti.forms import numPeopleForm
-
+from django.views.decorators.csrf import csrf_exempt
 from tutti.models import Review, User, Booking
 from django.template.defaultfilters import register
 
@@ -217,7 +217,7 @@ def booking_completed(request):
     return render(request, 'tutti/booking_completed.html')
 
 
-
+@csrf_exempt
 def reviews(request):
     if request.method == 'POST':
         if request.user.is_authenticated:
