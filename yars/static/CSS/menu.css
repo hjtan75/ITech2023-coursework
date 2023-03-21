@@ -47,6 +47,7 @@ h2 {
     padding-right: 15px;
     flex-basis: 50%;
     box-sizing: border-box;
+
 }
 
 .card {
@@ -54,19 +55,31 @@ h2 {
     border-radius: 5px;
     padding: 20px;
     margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, transform 0.3s;
 }
+
+.card:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            background-color: #f0f0f0;
+        }
 
 .card-title {
     font-size: 1.2em;
     margin-bottom: 0.5em;
+    color: #333;
 }
 
 .card-text {
     margin-bottom: 1em;
+    color: #666;
 }
 
 .font-weight-bold {
-    font-weight: bold;
+     font-weight: 500;
+     color: #333;
+     font-size: 1.2em;
 }
 
 nav {
