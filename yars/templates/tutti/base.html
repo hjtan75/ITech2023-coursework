@@ -51,14 +51,14 @@
       <ul class="navbar-nav">
         {% if user.is_authenticated %}
         <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_password_change' %}">Change Password</a></li>
-        <li class="nav-item booking-login-button"><a class="nav-link btn btn-success m-1 px-3 py-1" href="{% url 'tutti:profile' user.username %}">Profile</a></li>
-        <li class="nav-item booking-login-button"><a class="nav-link btn btn-success m-1 px-3 py-1" href="{% url 'auth_logout' %}?next=/tutti/">Logout</a></li>
+        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:profile' user.username %}">Profile</a></li>
+        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_logout' %}?next=/tutti/">Logout</a></li>
         {% else %}
-        <li class="nav-item booking-login-button"><a class="nav-link btn btn-success m-1 px-3 py-1" href="{% url 'registration_register' %}">Register</a></li>
-        <li class="nav-item booking-login-button"><a class="nav-link btn btn-success m-1 px-3 py-1" href="{% url 'auth_login' %}">Login</a></li>
+        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'registration_register' %}">Register</a></li>
+        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_login' %}">Login</a></li>
         {% endif %}
         {% if user.is_authenticated %}
-        <li class="nav-item booking-login-button"><a class="nav-link btn btn-success m-1 px-3 py-1" href="{% url 'tutti:show_bookings' %}">My booking</a></li>
+        <li class="nav-item"><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:show_bookings' %}">My booking</a></li>
         {% endif %}
       </ul>
       

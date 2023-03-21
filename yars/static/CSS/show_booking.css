@@ -31,12 +31,13 @@ h1 {
 }
 
 .booking-login-button {
-    /* background-color: red; */
+    margin: 1rem;
+    padding: 0.5rem 1rem !important;
 }
 .show_booking {
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     min-height: calc(100vh - 150px);
     max-width: 80%;
     max-height: 80%;
