@@ -1,4 +1,4 @@
-{% extends "tutti/base.html" %}
+{% extends "tutti/base.html" %} 
 {% load staticfiles %}
 {% block title_block %}
 Tuitti Pizza Reservation Syste
@@ -8,15 +8,18 @@ Tuitti Pizza Reservation Syste
     <div class="layui-col-md6 layui-col-md-offset3">
         <h1 style="text-align: center">Reviews</h1>
     </div>
-    {% for review in reviews %}
+    <!-- cycle through each comment -->
+    {% for review in reviews %} 
         <div class="layui-col-md6 layui-col-md-offset3">
             <fieldset class="layui-elem-field">
                 <legend>{{ review.user.user.username }}
                     {% for rate in 5|range_ %}
-                        {% if rate < review.rating %}
-                            <i class="layui-icon layui-icon-star-fill" style="color:orange"></i>
+                        <!-- fill in stars if the score is less than the current score -->
+                        {% if rate < review.rating %} 
+                            <i class="layui-icon layui-icon-star-fill"></i>
+                        <!-- otherwise, do not fill the stars  -->
                         {% else %}
-                            <i class="layui-icon layui-icon-star" style="color:orange"></i>
+                            <i class="layui-icon layui-icon-star"></i>
                         {% endif %}
                     {% endfor %}
                 </legend>
@@ -49,5 +52,6 @@ Tuitti Pizza Reservation Syste
         </div>
     </form>
 </div>
-    <script src="{% static 'js/review.js' %}"></script>
+    <!-- introducing a static file for review.js -->
+    <script src="{% static 'js/review.js' %}"></script> 
 {% endblock %}
