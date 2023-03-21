@@ -1,5 +1,5 @@
 {% extends 'tutti/base.html' %}
-
+{% load staticfiles %}
 {% block title_block %}
     Your Bookings
 {% endblock %}
@@ -10,18 +10,22 @@
 </div>
 {% if bookings %}
 <div class = "container-fluid show_booking" id="bookingTable">
+<div class="table-responsive">
 <table class = "table-bordered " >
-    <tr>
-        <th>bookingID</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Number of People</th>
+<thead class="thead-light">
+    <tr class="text-center ">
+        <th class="header-th">BookingID</th>
+        <th class="header-th">Date</th>
+        <th class="header-th">Time</th>
+        <th class="header-th">Number of People</th>
         <th>Description</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th class="header-th">Edit</th>
+        <th class="header-th">Delete</th>
     </tr>
+ </thead>
+ <tbody>
     {% for booking in bookings %}
-    <tr id="booking-{{ booking.bookingID }}">
+    <tr id="booking-{{ booking.bookingID }}" class="text-center booking-row">
         <td class="id">{{ booking.bookingID }}</td>
         <td class="date">{{ booking.date|date:"Y-m-d" }}</td>
         <td class="time">{{ booking.get_time_display }}</td>
@@ -40,8 +44,9 @@
         </td>
     </tr>
     {% endfor %}
-
+ </tbody>
 </table>
+</div>
 </div>
 
 <!-- Button trigger modal -->
