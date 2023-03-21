@@ -1,21 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book an appointment</title>
-</head>
-<body>
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
 
-<h1>Enter the number of people</h1>
-<div>
-    <label for="pet-select">Select Number of people:</label>
+{% block title_block %}
+    Book an appointment
+{% endblock %}
 
-    <select name="pets" id="pet-select">
-        <option value="">--Please choose an option--</option>
-    {% for numOfPeople in numOfPeoples %}
-        <option value={{ numOfPeople }}><td>{{ numOfPeople }}</td></option>
-    {% endfor %}
-    </select>
+{% block body_block %}
+<div class="jumbotron p-4">
+    <div class="container">
+        <h1 class="jumbotron-heading">Select number of seats</h1>
+    </div>
 </div>
-</body>
-</html>
+<div class="container">
+    <div class="form-group p-5">
+        <form id="booking_num_people" method="post" action="{% url 'tutti:booking_num_people' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for={{ form.numberOfPeople.id_for_label }}>{{ form.numberOfPeople.label }}</label>
+                <select id="form.numberOfPeople.id_for_label" name="numberOfPeople" class="form-control">
+                {% for x, y in form.fields.numberOfPeople.choices %}
+                    <option value="{{ x }}"{% if form.fields.numberOfPeople.value == x %} selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+                </select>
+            </div>
+            <div class="container text-center">
+                <input class="btn btn-success" type="submit" name="submit" value="Next">
+            </div>
+            
+        </form>
+    </div>
+</div>
+{% endblock body_block %}

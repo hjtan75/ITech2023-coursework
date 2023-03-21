@@ -1,45 +1,44 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Tuitti Pizza Reservation System</title>
-    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
-</head>
-<body>
-<br>
+{% extends "tutti/base.html" %}
+{% load staticfiles %}
+{% block title_block %}
+Tuitti Pizza Reservation Syste
+{% endblock %}
+{% block body_block %}
 <div class="layui-fluid">
+    <div class="layui-col-md6 layui-col-md-offset3">
+        <h1 style="text-align: center">Reviews</h1>
+    </div>
+    <!-- cycle through each comment -->
+    {% for review in reviews %}
         <div class="layui-col-md6 layui-col-md-offset3">
-            <h1 style="text-align: center">Reviews</h1>
-        </div>
-    
-        {% for review in reviews %}
-            <div class="layui-col-md6 layui-col-md-offset3">
-                <fieldset class="layui-elem-field">
+            <fieldset class="layui-elem-field review-div">
+                <div>
                     <legend>{{ review.user.user.username }}
                         {% for rate in 5|range_ %}
+                            <!-- fill in stars if the score is less than the current score -->
                             {% if rate < review.rating %}
-                                <i class="layui-icon layui-icon-star-fill" style="color:orange"></i>
+                                <i class="layui-icon layui-icon-star-fill review_star"></i>
+                            <!-- otherwise, do not fill the stars  -->
                             {% else %}
-                                <i class="layui-icon layui-icon-star" style="color:orange"></i>
+                                <i class="layui-icon layui-icon-star review_star"></i>
                             {% endif %}
                         {% endfor %}
                     </legend>
-                    <div class="layui-field-box" style="text-align: justify;">
-                        {{ review.description }}
-                    </div>
-                </fieldset>
-            </div>
-        {% endfor %}
-        <div class="layui-col-md1 layui-col-md-offset8">
-            <input class="layui-btn layui-btn-fluid" type="button" value="Add Review" onclick="onAddReviewClick()"/>
+                </div>
+                <div class="layui-field-box" style="text-align: justify;">
+                    {{ review.description }}
+                </div>
+            </fieldset>
         </div>
+    {% endfor %}
+    <div class="layui-col-md1 layui-col-md-offset8">
+        <input class="layui-btn layui-btn-fluid" type="button" value="Add Review" onclick="onAddReviewClick()"/>
     </div>
 </div>
 <br>
-<script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
-</body>
-<div id="add_review" hidden="hidden">
+{% endblock %}
+{% block js %}
+<div id="add_review" style="display: none">
     <form class="layui-form" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">Rate</label>
@@ -48,52 +47,13 @@
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">Description</label>
             <div class="layui-input-inline">
-                <textarea id="description" name="description" placeholder="Please input your description" class="layui-textarea"
+                <textarea id="description" name="description" placeholder="Please input your description"
+                          class="layui-textarea"
                           style="width: 400px"></textarea>
             </div>
         </div>
     </form>
 </div>
-<script>
-
-
-    function onAddReviewClick() {
-    }
-
-    layui.use(['jquery', 'rate'], function () {
-        var $ = layui.jquery;
-        var rate = layui.rate;
-
-        var rating = 0;
-
-        rate.render({
-            elem: '#star',
-            choose: function (value) {
-                rating = value;
-            }
-        });
-
-        onAddReviewClick = function () {
-            layer.open({
-                type: 1,
-                title: 'Add review',
-                content: $('#add_review'),
-                btn: ['Add', 'Cancel'],
-                area: ['600px', 'auto'],
-                shadeClose: true,
-                yes: function (index, layero) {
-                    let description = $("#description").val();
-                    alert("Add " + rating + " " + "stars" + " " + description);
-                    layer.close(index);
-                },
-                btn2: function (index, layero) {
-                    layer.close(index);
-                }
-            });
-
-            
-        }
-
-    });
-</script>
-</html>
+    <!-- introducing a static file for review.js -->
+    <script src="{% static 'js/review.js' %}"></script>
+{% endblock %}

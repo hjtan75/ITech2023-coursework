@@ -1,38 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book an appointment</title>
-</head>
-<body>
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
 
-<style>
-    table, th, td {
-        border:1px solid black;
-    }
-</style>
+{% block title_block %}
+    Book an appointment
+{% endblock %}
 
+{% block body_block %}
 <h1>Confirmation</h1>
 <div>
-    {% comment %} Selection of data time for booking {% endcomment %}
-    <label for="datetime-select">Your Booking Details</label>
-    <table style='width:50%'>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone number</th>
-            <th>Booking Time</th>
-            <th>Number of People</th>
-        </tr>
-        <tr>
-            <td>{{ user }}</td>
-            <td>{{ phone }}</td>
-            <td>{{ email }}</td>
-            <td>{{ datatime }}</td>
-            <td>{{ numOfPeoples }}</td>
-        </tr>
-    </table>
-    <button type="button">Confirm</button>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Time</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ chosen_time }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Date</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ chosen_date }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_name }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Email</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_email }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Phone Number</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_phone_number }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Address</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ user_address }}</h6>
+        </div>
+    </div>
+    <div class="card completed_card">
+        <div class="card-body py-1">
+            <h5 class="card-title">Notes</h5>
+            <h6 class="card-subtitle mb-2 text-muted text-center">{{ notes }}</h6>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+<div>
+    <div class="container text-center mt-3">
+        <a class="btn btn-success" href="{% url 'tutti:booking_completed' %}">Confirm</a>
+        <a class="btn btn-success" href="{% url 'tutti:index' %}">Cancel</a>
+    </div>
+</div>
+{% endblock body_block %}

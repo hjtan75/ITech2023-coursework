@@ -1,19 +1,18 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.contrib.auth.decorators import login_required
 from tutti.models import User, Booking, UserProfile
-from tutti.forms import  UserProfileForm
+from tutti.forms import  UserProfileForm, BookingDateForm, numPeopleForm, BookingTimeForm #, BookingConfirmationForm
 from django.http import JsonResponse
 import tutti.booking_function
-from tutti.forms import numPeopleForm
-
-from tutti.models import Review, User, Booking
+from datetime import datetime, date
+# from tutti.forms import numPeopleForm
+from django.views.decorators.csrf import csrf_exempt
+from tutti.models import Review, User, Booking, Category, MenuSpecific
 from django.template.defaultfilters import register
-
 from django.urls import reverse
-
 
 # Create your views here.
 def index(request):
@@ -107,7 +106,10 @@ def show_bookings(request):
         # Can we find a booking with the given username?
         # If we can't, the .get() method raises a DoesNotExist exception.
         # The .get() method returns one model instance or raises an exception.
-        bookings = Booking.objects.filter(user_id=9)
+        current_user = UserProfile.objects.filter(user=request.user).first()
+        bookings = Booking.objects.filter(user=current_user)
+        # print(user_id)
+        print(bookings)
         # print(bookings[0].time)
         # print(bookings[0].date)
         # Retrieve all of the associated bookings.
@@ -116,7 +118,6 @@ def show_bookings(request):
 
     except Booking.DoesNotExist:
         # We get here if we didn't find the specified booking.
-        # Don't do anything -
         # the template will display the "no category" message for us.
         context_dict['bookings'] = None
 
@@ -171,62 +172,150 @@ class EditBookingView(View):
             return JsonResponse({'status': 'fail'})
 
 
-
-def booking(request):
+@login_required
+def booking_num_people(request):
     context_dict = {}
 
-    form = numPeopleForm()
-    context_dict['form'] = form
+    if request.method == 'POST':
+        booking_form = numPeopleForm(request.POST)
 
-    # if request.method == 'POST':
-    #     form = numPeopleForm(request.POST)
-
-    # if form.is_valid():
-    #     # Save the new category and return to index page
-    #     print(form)
-    #     return redirect('tutti/booking_date_time.html')
-    # else:
-    #     print(form.errors)
-
-    # Loading the form
-    print(form)
+        if booking_form.is_valid():
+            numOfPeople = booking_form.cleaned_data['numberOfPeople']
+            request.session['numOfPeople'] = numOfPeople
+            return redirect(reverse('tutti:booking_date'))
+    else:
+        booking_form = numPeopleForm()
+        
+    context_dict['form'] = booking_form
     return render(request, 'tutti/booking_num_people.html', context=context_dict)
 
 
-def booking_date_and_time(request):
+
+@login_required
+def booking_date(request):
     context_dict = {}
-    context_dict['months'] = ['June', 'July', 'August', 'September']
-    context_dict['days'] = ['01', '02', '05', '06']
-    context_dict['times'] = ['0500', '0900', '1230', '1500']
+    
+    if request.method == 'POST':
+        booking_form = BookingDateForm(request.POST)
 
-    return render(request, 'tutti/booking_date_time.html', context=context_dict)
+        if booking_form.is_valid():
+            # checking there are empty slots for the given time
+            date_obj = booking_form.cleaned_data['date']
+            numOfPeople = request.session['numOfPeople']
+            time_available = tutti.booking_function.timeForNumSeatsAndDate(int(numOfPeople), date_obj)
+            
+            if len(time_available) != 0:
+                request.session['chosen_date'] = date_obj.strftime('%d/%m/%Y')
+                request.session['time_list'] = time_available
+                return redirect(reverse('tutti:booking_time'))
+            else:
+                return HttpResponse('Not available for that date')
+    else:
+        booking_form = BookingDateForm()
+
+    context_dict['form'] = booking_form
+    return render(request, 'tutti/booking_date.html', context=context_dict)
 
 
+@login_required
+def booking_time(request):
+    context_dict = {}
+    available_time_list = request.session['time_list']
+    
+    if request.method == 'POST':
+        booking_form = BookingTimeForm(request.POST)
+
+        if booking_form.is_valid():
+            chosen_time = booking_form.cleaned_data['time']
+            notes = booking_form.cleaned_data['notes']
+
+            if chosen_time in available_time_list:
+                request.session['chosen_time'] = chosen_time
+                request.session['notes'] = notes
+                return redirect(reverse('tutti:booking_confirmation'))
+            else:
+                return HttpResponse('Not available for that time')
+    else:
+        booking_form = BookingTimeForm()
+        booking_form.fields['time'].choices = [(available_time, available_time) for available_time in available_time_list]
+
+    context_dict['form'] = booking_form
+    return render(request, 'tutti/booking_time.html', context=context_dict)
+
+
+@login_required
 def booking_confirmation(request):
     context_dict = {}
-    context_dict['user'] = 'Adam Smith'
-    context_dict['phone'] = '07465898556'
-    context_dict['email'] = 'testing@testing.com'
-    context_dict['datatime'] = '19:30 26 February 2022'
-    context_dict['numOfPeoples'] = 5
+    # Extract information from session request
+    print(f'username: {request.user.id}')
 
+    current_user = UserProfile.objects.filter(user=request.user).first()
+    chosen_time = request.session['chosen_time']
+    numOfPeople = request.session['numOfPeople']
+    chosen_date_obj = datetime.strptime(request.session['chosen_date'], '%d/%m/%Y').date()
+    notes = request.session['notes']
+
+    # Add booking information to context dict 
+    context_dict['chosen_time'] = chosen_time
+    context_dict['numOfPeople'] = numOfPeople
+    context_dict['chosen_date'] = datetime.strftime(chosen_date_obj, '%d/%m/%Y')
+    context_dict['user_name'] = str(current_user)
+    context_dict['user_email'] = current_user.user.email
+    context_dict['user_phone_number'] = current_user.phoneNum
+    context_dict['user_address'] = current_user.address
+    context_dict['notes'] = notes
     return render(request, 'tutti/booking_confirmation.html', context=context_dict)
 
-
+@login_required
 def booking_completed(request):
+    context_dict = {}
+    # Extract information from session request
+    current_user = UserProfile.objects.filter(user=request.user).first()
+    chosen_time = request.session['chosen_time']
+    numOfPeople = request.session['numOfPeople']
+    chosen_date_obj = datetime.strptime(request.session['chosen_date'], '%d/%m/%Y').date()
+    notes = request.session['notes']
+
+    booking = Booking(user=current_user, date=chosen_date_obj, time=chosen_time, 
+                      numberOfPeople=numOfPeople, notes=notes, bookingStatus=True)
+    # Clear session
+    booking.save()
+    # request.session['chosen_time'] = None
+    # request.session['numOfPeople'] = None
+
     return render(request, 'tutti/booking_completed.html')
 
 
-
+@csrf_exempt
+@login_required
 def reviews(request):
     if request.method == 'POST':
-        ...
-    # reviews_ = Review.objects.filter(user_id=1)
+        if request.user.is_authenticated:
+            try:
+                user = UserProfile.objects.filter(user__username=request.user.username).first()
+                rating = int(request.POST.get('rating', 0))
+                description = request.POST.get('description')
+                review = Review(user=user, rating=rating, description=description)
+                review.save()
+                return JsonResponse({"status": True, "msg": "Added successfully."})
+            except Exception as e:
+                return JsonResponse({"status": False, "msg": "Failed to add."})
+        else:
+            return JsonResponse({"status": False, "msg": "Please login first."})
     reviews_ = Review.objects.all()
     return render(request, 'tutti/review.html', context={'reviews': reviews_})
+
 
 @register.filter
 def range_(value):
     return range(value)
 
+def menu(request):
+    categories = Category.objects.all()
+    menu_specific = MenuSpecific.objects.all()
+    context = {'categories': categories, 'menu_specific': menu_specific}
+    return render(request, 'tutti/menu.html', context)
 
+
+def about(request):
+    return render(request, 'tutti/about_page.html')

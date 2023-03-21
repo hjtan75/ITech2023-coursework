@@ -1,0 +1,36 @@
+{% extends 'tutti/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Tuitti Pizza Menu
+{% endblock %}
+
+{% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'CSS/menu.css' %}" />{% endblock custom_css %}
+
+{% block body_block %}
+<div class="container">
+    <h1>Tuitti Pizza Menu</h1>
+    {% for category in categories %}
+    <div class="menu-section"  style="background-image: url('{{ category.background_image.url }}');">
+        <div class="menu-content">
+            <h2>{{ category.name }}</h2>
+            <div class="row">
+                {% for specific in menu_specific %}
+                {% if specific.category == category %}
+                <div class="Calibration">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ specific.name }}</h5>
+                            <p class="card-text">{{ specific.description }}</p>
+                            <p class="card-text font-weight-bold">£{{ specific.price }}</p>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock body_block %}
