@@ -2,8 +2,8 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from tutti.models import Review, User, Booking, UserProfile
+from tutti.forms import numPeopleForm,BookingDateForm
 import json
-from datetime import date
 
 
 # helper function to create test user and user profile
@@ -193,6 +193,44 @@ class EditBookingViewTestCase(TestCase):
         self.assertEqual(str(self.booking.date), '2023-03-21')
         self.assertEqual(self.booking.time, '12:00')
         self.assertEqual(self.booking.notes, 'Test notes')
+
+
+class BookingNumPeopleViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.url = reverse('tutti:booking_num_people')
+        self.user, self.user_profile = create_test_user()
+        self.client.login(username='testuser', password='password123')
+
+    def test_booking_num_people_get(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIsInstance(response.context['form'], numPeopleForm)
+
+    def test_booking_num_people_post(self):
+        data = {'numberOfPeople': 4}
+        response = self.client.post(self.url, data=data)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(self.client.session['numOfPeople'], '4')
+        self.assertRedirects(response, reverse('tutti:booking_date'))
+
+
+class BookingDateViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user, self.user_profile = create_test_user()
+        self.client.login(username='testuser', password='password123')
+        self.client.session['numOfPeople'] = '4'
+        self.client.session.save()
+
+    def test_booking_date_view_get(self):
+        # Test GET request to booking_date view
+        response = self.client.get(reverse('tutti:booking_date'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'tutti/booking_date.html')
+        self.assertTrue(isinstance(response.context['form'], BookingDateForm))
+
+
 
 
 
