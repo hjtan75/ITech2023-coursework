@@ -14,7 +14,8 @@ from tutti.models import Review, User, Booking, Category, MenuSpecific
 from django.template.defaultfilters import register
 from django.urls import reverse
 
-# Create your views here.
+
+# View to handle home page here.
 def index(request):
 
     context_dict = {}
@@ -23,6 +24,8 @@ def index(request):
     return render(request, 'tutti/index.html', context=context_dict)
 
 
+# View to handle register step 2, let user create their profile.
+# after user has finished register step 1.
 @login_required
 def register_profile(request):
     form = UserProfileForm()
@@ -39,6 +42,7 @@ def register_profile(request):
     return render(request, 'tutti/profile_registration.html', context_dict)
 
 
+# List userprofile
 class ProfileView(View):
     def get_user_details(self, username):
         try:
@@ -104,11 +108,8 @@ def show_bookings(request):
     context_dict = {}
     try:
         # Can we find a booking with the given username?
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        # The .get() method returns one model instance or raises an exception.
         current_user = UserProfile.objects.filter(user=request.user).first()
         bookings = Booking.objects.filter(user=current_user)
-
         # Retrieve all of the associated bookings.
         # Adds our results list to the template context under name pages.
         context_dict['bookings'] = bookings
@@ -122,7 +123,7 @@ def show_bookings(request):
     return render(request, 'tutti/your_booking.html', context=context_dict)
 
 
-# View to delete booking.
+# View to delete booking, used to receive ajax get and return Json response
 class DeleteBookingView(View):
 
     def get(self, request):
@@ -138,6 +139,7 @@ class DeleteBookingView(View):
         return JsonResponse({'status': 'success'})
 
 
+# View to edit booking, used to receive ajax get and return Json response
 class EditBookingView(View):
 
     def get(self, request):

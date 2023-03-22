@@ -23,6 +23,9 @@ from registration.backends.simple.views import RegistrationView
 from django.urls import reverse
 
 
+# overwrite the redirect url for RegistrationView,
+# So, a user would first register as a standard User,
+# then, they would be redirected to register their profile
 class MyRegistrationView(RegistrationView):
     def get_success_url(self, user):
         return reverse('tutti:register_profile')

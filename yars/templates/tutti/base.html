@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-
+<!-- Base template for the header navbar, every other pages will inherit this base -->
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -48,20 +48,24 @@
       </nav>
     </div>
     <div class="position-absolute top-0 end-0 booking-login mt-3">
-      <ul class="navbar-nav">
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle btn btn-success" data-toggle="dropdown">Your Account
+        <span class="caret"></span></a>
+      <div class="dropdown-menu">
         {% if user.is_authenticated %}
-        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_password_change' %}">Change Password</a></li>
-        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:profile' user.username %}">Profile</a></li>
-        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_logout' %}?next=/tutti/">Logout</a></li>
+        <a class="dropdown-item" href="{% url 'auth_password_change' %}">Change Password</a>
+        <a class="dropdown-item" href="{% url 'tutti:profile' user.username %}">Profile</a>
+        <a class="dropdown-item" href="{% url 'auth_logout' %}?next=/tutti/">Logout</a>
         {% else %}
-        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'registration_register' %}">Register</a></li>
-        <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_login' %}">Login</a></li>
+        <a class="dropdown-item" href="{% url 'registration_register' %}">Register</a>
+        <a class="dropdown-item" href="{% url 'auth_login' %}">Login</a>
         {% endif %}
         {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:show_bookings' %}">My booking</a></li>
+        <a class="dropdown-item" href="{% url 'tutti:show_bookings' %}">My booking</a>
         {% endif %}
-      </ul>
-      
+      </div>
+
+        </li>
     </div>
   </div> 
 </header>
