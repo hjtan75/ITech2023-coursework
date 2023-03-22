@@ -108,10 +108,7 @@ def show_bookings(request):
         # The .get() method returns one model instance or raises an exception.
         current_user = UserProfile.objects.filter(user=request.user).first()
         bookings = Booking.objects.filter(user=current_user)
-        # print(user_id)
-        print(bookings)
-        # print(bookings[0].time)
-        # print(bookings[0].date)
+
         # Retrieve all of the associated bookings.
         # Adds our results list to the template context under name pages.
         context_dict['bookings'] = bookings
@@ -132,7 +129,6 @@ class DeleteBookingView(View):
         booking_id = request.GET['booking_id']
         try:
             bookings = Booking.objects.get(bookingID=booking_id)
-            print(bookings)
         except bookings.DoesNotExist:
             return HttpResponse(-1)
         except ValueError:
@@ -149,8 +145,6 @@ class EditBookingView(View):
         numOFPeople = int(request.GET['numberOFPeople'])
         date = request.GET['date']
         time = request.GET['time']
-        print(type(date))
-        print(f'edit new date is {date}')
         notes = request.GET['notes']
         seats_left = tutti.booking_function.numSeatsForDate(date, time)
         # print("seat num")
@@ -248,8 +242,6 @@ def booking_time(request):
 def booking_confirmation(request):
     context_dict = {}
     # Extract information from session request
-    print(f'username: {request.user.id}')
-
     current_user = UserProfile.objects.filter(user=request.user).first()
     chosen_time = request.session['chosen_time']
     numOfPeople = request.session['numOfPeople']
