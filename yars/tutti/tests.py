@@ -95,7 +95,7 @@ class ShowBookingsTestCase(TestCase):
         self.assertContains(response, 'No bookings currently.')
         self.assertQuerysetEqual(response.context['bookings'], [])
 
-
+# Review test
 class ReviewsTestCase(TestCase):
     def setUp(self):
         self.client = Client()
@@ -128,6 +128,7 @@ class ReviewsTestCase(TestCase):
         self.assertEqual(response.url, '/accounts/login/?next=/tutti/reviews/')
 
 
+# Test delete booking
 class DeleteBookingViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
@@ -145,6 +146,7 @@ class DeleteBookingViewTestCase(TestCase):
         self.assertRaises(Booking.DoesNotExist, Booking.objects.get, bookingID=self.booking.bookingID)
 
 
+# Test edit booking
 class EditBookingViewTestCase(TestCase):
     def setUp(self):
         self.client = Client()
