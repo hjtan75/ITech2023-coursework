@@ -11,12 +11,12 @@
 
 
 {% block body_block %}
+<div class="emerge">
+    <img src="../../media/table-gaea088920_1920.jpg" alt="image123">
+    <h1>About us</h1>
+    </div>
 <div class="about-container">
     <!-- About our header area -->
-    <div class="about-header">
-        <h1>About us</h1>
-        <p>Here is the story about our restaurant</p>
-    </div>
     <!-- About us content area start -->
     <div class="about-content">
         <!-- Text description section -->
@@ -42,4 +42,26 @@
         </div>
     </div>
 </div>
+    <script>
+
+        window.addEventListener('scroll', function () {
+
+            const animatedElements = document.querySelectorAll('.about-text, .about-image');
+
+
+            animatedElements.forEach(function (element) {
+
+                const position = element.getBoundingClientRect();
+
+
+                if (position.top >= 0 && position.bottom <= window.innerHeight) {
+
+                    element.classList.add('visible');
+                } else {
+
+                    element.classList.remove('visible');
+                }
+            });
+        });
+    </script>
 {% endblock body_block %}
