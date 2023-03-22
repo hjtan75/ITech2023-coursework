@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-
+<!-- Base template for the header navbar, every other pages will inherit this base -->
 <html lang="en">
     <head>
     <meta charset="utf-8">
@@ -48,7 +48,10 @@
       </nav>
     </div>
     <div class="position-absolute top-0 end-0 booking-login mt-3">
-      <ul class="navbar-nav">
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Your Account
+        <span class="caret"></span></a>
+      <ul class="dropdown-menu">
         {% if user.is_authenticated %}
         <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'auth_password_change' %}">Change Password</a></li>
         <li class="nav-item "><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:profile' user.username %}">Profile</a></li>
@@ -61,7 +64,8 @@
         <li class="nav-item"><a class="nav-link btn btn-success m-1 px-3 py-1 booking-login-button" href="{% url 'tutti:show_bookings' %}">My booking</a></li>
         {% endif %}
       </ul>
-      
+
+        </li>
     </div>
   </div> 
 </header>
