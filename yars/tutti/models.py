@@ -50,12 +50,14 @@ class Review(models.Model):
     def __str__(self):
         return str(self.reviewID)
     
+# Create a Category model to represent the categories of the menu
 class Category(models.Model):
     name = models.CharField(max_length=50)
     background_image = models.ImageField(upload_to='category_backgrounds/')
     def __str__(self):
         return self.name
 
+#Create a MenuSpecific model to represent specific dishes in the menu
 class MenuSpecific(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()

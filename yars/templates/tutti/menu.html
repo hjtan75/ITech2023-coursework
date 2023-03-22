@@ -8,13 +8,27 @@
 {% block custom_css %}<link rel="stylesheet" type="text/css" href="{% static 'CSS/menu.css' %}" />{% endblock custom_css %}
 
 {% block body_block %}
+
+<nav>
+        <ul>
+            {% for category in categories %} <!-- Loop through the list of categories and create a navigation link for each category -->
+             <!-- Create a link with an anchor point that will jump to the appropriate category when clicked -->
+            <li><a href="#{{ category.name |lower|slugify }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+</nav>
 <div class="container">
     <h1>Tuitti Pizza Menu</h1>
+     <!-- Iterate through the list of categories -->
     {% for category in categories %}
+    <!-- Menu partitions, set the background image for each partition -->
     <div class="menu-section"  style="background-image: url('{{ category.background_image.url }}');">
+        <!-- Menu content start -->
         <div class="menu-content">
-            <h2>{{ category.name }}</h2>
+             <!-- Category title, using anchor ID -->
+           <h2 id="{{ category.name|lower|slugify }}">{{ category.name }}</h2>
             <div class="row">
+                <!-- Loop through the food in the menu -->
                 {% for specific in menu_specific %}
                 {% if specific.category == category %}
                 <div class="Calibration">
