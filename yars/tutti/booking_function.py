@@ -3,11 +3,15 @@ import random
 from datetime import datetime
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yars.settings')
 
-
 import django
 from django.db.models import Sum, Count
 django.setup()
 from tutti.models import User, Booking
+
+# A libary that provide constant and function needed related to booking
+# Capacity of retaurant and timeslot available are set here
+# Function numSeatsForDate: Return number of available seats for a given time and date
+# Function timeForNumSeatsAndDate: Return available time for a given number of seats and date
 
 numOfPeoplePerSlot = 30
 
@@ -55,7 +59,6 @@ def numSeatsForDate(date_string, time_string):
 
 
 def timeForNumSeatsAndDate(numSeatRequested, date_obj):
-    # Return which date and time is available for that number of seats
     timeUnavailable = []
     timeAvailable = []
     timeSlots = createTimeSlotsTuple()

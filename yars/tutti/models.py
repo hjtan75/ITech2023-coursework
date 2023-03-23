@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Function to create predefined timeslots for booking
+
 def createTimeSlotsTuple():
+    # Function to create predefined timeslots for booking
     startHour = 12
     endHour = 24
 
@@ -16,8 +17,9 @@ def createTimeSlotsTuple():
 
     return tuple(timeslots)
 
-# Create your models here.
 class UserProfile(models.Model):
+    # Store the information about a user
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     phoneNum =  models.CharField(max_length=14)
     address = models.CharField(max_length=128)
@@ -27,7 +29,9 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Booking(models.Model):
+    # Store booking information
     # bookingStatus: true = expired booking, false = pending booking
+
     timeSlots = createTimeSlotsTuple()
     bookingID = models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
@@ -42,6 +46,8 @@ class Booking(models.Model):
     
 
 class Review(models.Model):
+    # Store the reviews made by 
+    
     reviewID = models.AutoField(primary_key=True)
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     rating = models.IntegerField()
@@ -50,15 +56,18 @@ class Review(models.Model):
     def __str__(self):
         return str(self.reviewID)
     
-# Create a Category model to represent the categories of the menu
 class Category(models.Model):
+    # Create a Category model to represent the categories of the menu
+
     name = models.CharField(max_length=50)
     background_image = models.ImageField(upload_to='category_backgrounds/')
     def __str__(self):
         return self.name
 
-#Create a MenuSpecific model to represent specific dishes in the menu
+
 class MenuSpecific(models.Model):
+    #Create a MenuSpecific model to represent specific dishes in the menu
+
     name = models.CharField(max_length=50)
     description = models.TextField()
     price = models.DecimalField(max_digits=5, decimal_places=1)

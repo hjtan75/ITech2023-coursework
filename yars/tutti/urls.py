@@ -3,6 +3,8 @@ from tutti import views
 
 app_name = 'tutti'
 
+# Routing rule that map URL to views.
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('register_profile/', views.register_profile, name='register_profile'),

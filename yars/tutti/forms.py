@@ -3,6 +3,9 @@ from tutti.models import Review, Booking
 from tutti.models import UserProfile, User
 from datetime import datetime, date
 
+# Provide all the need form in the booking process
+# Pages like: select time, date, seat etc.
+
 numOfPeopleChoices = (
     ("1", "1"),
     ("2", "2"),
@@ -12,7 +15,6 @@ numOfPeopleChoices = (
     ("6", "6"),
 )
 
-# Function to create predefined timeslots for booking
 def createTimeSlotsTuple():
     startHour = 12
     endHour = 24
