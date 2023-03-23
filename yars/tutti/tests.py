@@ -6,6 +6,9 @@ import json
 from datetime import date
 
 
+# Unit test for out web application
+
+
 # helper function to create test user and user profile
 def create_test_user():
     user = User.objects.create_user(

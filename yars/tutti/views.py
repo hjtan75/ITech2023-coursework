@@ -171,6 +171,8 @@ class EditBookingView(View):
 
 @login_required
 def booking_num_people(request):
+    # Select number of seat for booking
+    # Extract information from form and put it in session cache
     context_dict = {}
 
     if request.method == 'POST':
@@ -190,6 +192,10 @@ def booking_num_people(request):
 
 @login_required
 def booking_date(request):
+    # Select a booking date
+    # Filter available time based on the number of seats and selected booking date
+    # Called the timeForNumSeatsAndDate function
+    # store available time in session cache
     context_dict = {}
     
     if request.method == 'POST':
@@ -216,6 +222,7 @@ def booking_date(request):
 
 @login_required
 def booking_time(request):
+    #  Display available booking date
     context_dict = {}
     available_time_list = request.session['time_list']
     
@@ -242,6 +249,7 @@ def booking_time(request):
 
 @login_required
 def booking_confirmation(request):
+    # Display every booking information about the booking
     context_dict = {}
     # Extract information from session request
     current_user = UserProfile.objects.filter(user=request.user).first()
@@ -263,8 +271,11 @@ def booking_confirmation(request):
 
 @login_required
 def booking_completed(request):
-    context_dict = {}
     # Extract information from session request
+    # Save it in modal
+
+    context_dict = {}
+
     current_user = UserProfile.objects.filter(user=request.user).first()
     chosen_time = request.session['chosen_time']
     numOfPeople = request.session['numOfPeople']
@@ -273,10 +284,7 @@ def booking_completed(request):
 
     booking = Booking(user=current_user, date=chosen_date_obj, time=chosen_time, 
                       numberOfPeople=numOfPeople, notes=notes, bookingStatus=True)
-    # Clear session
     booking.save()
-    # request.session['chosen_time'] = None
-    # request.session['numOfPeople'] = None
 
     return render(request, 'tutti/booking_completed.html')
 
