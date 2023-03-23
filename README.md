@@ -1,12 +1,8 @@
+# YARS (Yet Another Reserveation System)
+YARS is a comprehensive online application that simplifies the restaurant reservationprocess by enabling users to browse menu items and make online reservations. This system eliminates the need for phone or in-person reservations resulted in cost reduction. 
+YARS’s user centric design allows users to quickly access restaurant menus and makereservations with a chosen time, date, and number of seats. This feature not onlyspeed up the ordering process, but also helps users avoid long waiting times andtheinconvenience of queuing at restaurant. In addition, the web application can helprestaurants effectively manage table arrangements and allocate service personnel automating the reservation process. 
 
-## Google Drive Link
-https://drive.google.com/drive/folders/1JTDWZtOhXautpa1wfHQH4-VJEj402DpL?usp=sharing
 
-## Notion Link
-https://drive.google.com/drive/folders/1JTDWZtOhXautpa1wfHQH4-VJEj402DpL?usp=sharing
-
-## Populate database
-![image](https://user-images.githubusercontent.com/44732367/219439280-927e93c7-a5b4-4059-b118-cb314ecfae24.png)
-test
+### URL: https://redchicken.pythonanywhere.com/ 
 
 
